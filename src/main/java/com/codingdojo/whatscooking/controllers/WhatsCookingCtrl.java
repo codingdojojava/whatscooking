@@ -1,5 +1,67 @@
 package com.codingdojo.whatscooking.controllers;
 
-public class WhatsCookingCtrl {
+import java.security.Principal;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.codingdojo.whatscooking.models.User;
+import com.codingdojo.whatscooking.services.WhatsCookingServices;
+import com.codingdojo.whatscooking.validators.UserValidator;
+
+@Controller
+public class WhatsCookingCtrl {
+	
+	@Autowired
+	private WhatsCookingServices whatsCookingServices;
+	@Autowired
+	private UserValidator userValidator;
+	
+	@RequestMapping("/")
+	public String loginForm(@Valid @ModelAttribute("user") User user, 
+								@RequestParam(value="error", required=false) String error, 
+								@RequestParam(value="logout", required=false) String logout,
+								Model model) 
+	{
+		if(error != null) {
+			model.addAttribute("errorMessage", "Invalid Credentials, please try again.");
+		}
+		if(logout != null) {
+			model.addAttribute("logoutMessage", "Logout Successful");
+		}
+		return "index";
+	}
+	
+	@PostMapping("/register")
+	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+		
+//		validate user and populate result if it has errors
+		userValidator.validate(user, result);
+		
+//		condition logic of what to do if it has errors
+		if (result.hasErrors()) {
+			return "landing";
+		}
+//		if success this will NOTE! Only adds a user role to user. This is where you place your role logic
+//		check for admin
+
+		whatsCookingServices.saveWithUserRole(user);
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value={"home"})
+	public String home(Principal principal, Model model) {
+		String username = principal.getName();
+		User user = whatsCookingServices.findByUsername(username);
+		model.addAttribute("currentUser", user);
+		return "home";
+	}
 }

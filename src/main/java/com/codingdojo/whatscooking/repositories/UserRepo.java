@@ -1,5 +1,9 @@
 package com.codingdojo.whatscooking.repositories;
 
-public class UserRepo {
+import org.springframework.data.repository.CrudRepository;
 
+import com.codingdojo.whatscooking.models.User;
+
+public interface UserRepo extends CrudRepository<User, Long>{
+	User findByUsername(String username);
 }
