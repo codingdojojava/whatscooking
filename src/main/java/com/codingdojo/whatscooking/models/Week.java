@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Week {
@@ -18,7 +19,9 @@ public class Week {
 	@GeneratedValue
 	private long id;
 	
-	private boolean selected;
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="userSelected_id")
+	private User userSelected;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
@@ -88,14 +91,6 @@ public class Week {
 		this.id = id;
 	}
 
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -158,6 +153,14 @@ public class Week {
 
 	public void setSunRecipes(List<Recipe> sunRecipes) {
 		this.sunRecipes = sunRecipes;
+	}
+
+	public User getUserSelected() {
+		return userSelected;
+	}
+
+	public void setUserSelected(User userSelected) {
+		this.userSelected = userSelected;
 	}
 	
 	
