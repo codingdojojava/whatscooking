@@ -20,7 +20,7 @@ public class Allergy {
 	private long id;
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-        name = "userallergie", 
+        name = "userallergies", 
         joinColumns = @JoinColumn(name = "allergy_id"), 
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
