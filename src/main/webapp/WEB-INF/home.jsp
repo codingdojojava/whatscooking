@@ -9,6 +9,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<form id="logoutForm" method="POST" action="/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="submit" value="Logout!" />
+    </form>
 	<h1>What's cooking, ${current.firstname}?</h1>
 	<h2>Current plan</h2>
 	<div id="week">

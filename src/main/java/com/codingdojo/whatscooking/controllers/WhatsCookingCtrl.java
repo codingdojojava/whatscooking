@@ -56,14 +56,16 @@ public class WhatsCookingCtrl {
 	}
 	
 	@PostMapping("/register")
+
 	public String registration(@Valid @ModelAttribute("userInfo") User user, BindingResult result, Model model) {
 //		validate user and populate result if it has errors
+
 		userValidator.validate(user, result);
 		
-//		condition logic of what to do if it has errors
 		if (result.hasErrors()) {
 			return "index";
 		}
+
 		
 		Week temp = new Week();
 		temp.setSelected(true);
@@ -85,4 +87,6 @@ public class WhatsCookingCtrl {
 		model.addAttribute("current", user);
 		return "home";
 	}
+	
+	
 }
