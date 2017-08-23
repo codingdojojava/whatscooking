@@ -43,15 +43,11 @@ public class WhatsCookingCtrl {
 	@PostMapping("/register")
 	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
 		
-//		validate user and populate result if it has errors
 		userValidator.validate(user, result);
 		
-//		condition logic of what to do if it has errors
 		if (result.hasErrors()) {
 			return "landing";
 		}
-//		if success this will NOTE! Only adds a user role to user. This is where you place your role logic
-//		check for admin
 
 		whatsCookingServices.saveWithUserRole(user);
 		return "redirect:/";
@@ -64,4 +60,6 @@ public class WhatsCookingCtrl {
 		model.addAttribute("currentUser", user);
 		return "home";
 	}
+	
+	
 }
