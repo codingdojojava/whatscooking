@@ -26,6 +26,7 @@ public class Allergy {
     )
 	private List<User> users;
 	private String name;
+	private String searchName;
 
 	public long getId() {
 		return id;
@@ -41,6 +42,22 @@ public class Allergy {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
 	
 	

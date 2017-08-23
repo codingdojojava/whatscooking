@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -35,6 +36,9 @@ public class User {
 	
 	@Size(min=3)
 	private String lastname;
+	
+	@OneToOne(mappedBy="userSelected", fetch=FetchType.LAZY)
+	private Week selected;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user", fetch=FetchType.LAZY)
 	private List<Week> weeks;
@@ -210,6 +214,13 @@ public class User {
 		this.allergies = allergies;
 	}
 
+	public Week getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Week selected) {
+		this.selected = selected;
+	}
 	
 	
 }

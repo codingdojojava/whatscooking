@@ -17,6 +17,7 @@ public class Diet {
 	@GeneratedValue
 	private long id;
 	private String name;
+	private String searchName;
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
         name = "diets", 
@@ -42,6 +43,12 @@ public class Diet {
 	}
 	public void setDietUsers(List<User> dietUsers) {
 		this.dietUsers = dietUsers;
+	}
+	public String getSearchName() {
+		return searchName;
+	}
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
 	
 	
