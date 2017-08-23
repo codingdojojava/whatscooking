@@ -441,7 +441,7 @@
 	                            </div>
 	                            
 	                            <div class="tab-pane fade" id="Register">
-	                            		<form:form method="POST" action="/register" cssClass="form-horizontal" modelAttribute="user">
+	                            		<form:form method="POST" action="/register" cssClass="form-horizontal" modelAttribute="userInfo">
 										<form:errors path="user.*"/>
 	                                		
 		                                <div class="form-group">
@@ -488,7 +488,10 @@
 			                                    <c:forEach var="diet" items="${diets}" varStatus="loop">
 													
 													<c:choose>
-														<c:when test="${loop.index % 2 eq 0 }">
+													
+														
+ 														<c:when test="${loop.index eq 2}">
+														
 																<div class="col-sm-1 checkbox_container">
 												        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
 												        			</div>
@@ -496,11 +499,32 @@
 												        				<label>${diet.name}</label>
 												        			</div>
 															</div>
-														</c:when>
-														<c:when test="${loop.index % 3 eq 0 }">
+															
+														</c:when> 
+														
+ 														<c:when test="${loop.index eq 5}">
+														
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${diet.name}</label>
+												        			</div>
+															</div>
+															
+														</c:when> 
+														
+ 														<c:when test="${loop.index eq 3 }">
 									        					<div class="row">
 									        					<div class="col-sm-2"></div>
-														</c:when>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${diet.name}</label>
+											        			</div>
+														</c:when> 
+														
 														<c:otherwise>
 											        			<div class="col-sm-1 checkbox_container">
 											        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
@@ -509,18 +533,20 @@
 											        				<label>${diet.name}</label>
 											        			</div>
 														</c:otherwise>
+														
 													</c:choose>
+													
 			                                    </c:forEach>
-			                  
-		                                </div>
+			                  				</div>
 		                                
 		                                <div class="form-group">
 		                                	   <div class="row">
 			                                    <label class="col-sm-2 control-label">Allergies:</label>
-			                                    	<c:forEach var="allergy" items="${allergies}" varStatus="loop">
+	 		                                    	<c:forEach var="allergy" items="${allergies}" varStatus="loop">
 													
 													<c:choose>
-														<c:when test="${loop.index % 2 eq 0 }">
+													
+														<c:when test="${loop.index eq 2 }">
 																<div class="col-sm-1 checkbox_container">
 												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
 												        			</div>
@@ -529,9 +555,55 @@
 												        			</div>
 															</div>
 														</c:when>
-														<c:when test="${loop.index % 3 eq 0 }">
+														<c:when test="${loop.index eq 5 }">
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${allergy.name}</label>
+												        			</div>
+															</div>
+														</c:when>
+														<c:when test="${loop.index eq 8 }">
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${allergy.name}</label>
+												        			</div>
+															</div>
+														</c:when>
+														<c:when test="${loop.index eq 9 }">
+																<div class="row">
+									        						<div class="col-sm-2"></div>
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${allergy.name}</label>
+												        			</div>
+															</div>
+														</c:when>
+														
+														<c:when test="${loop.index eq 3 }">
 									        					<div class="row">
 									        					<div class="col-sm-2"></div>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${allergy.name}</label>
+											        			</div>
+														</c:when>
+														<c:when test="${loop.index eq 6 }">
+									        					<div class="row">
+									        					<div class="col-sm-2"></div>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${allergy.name}</label>
+											        			</div>
 														</c:when>
 														<c:otherwise>
 											        			<div class="col-sm-1 checkbox_container">
@@ -542,13 +614,8 @@
 											        			</div>
 														</c:otherwise>
 													</c:choose>
-													
-									   
-									        		</c:forEach>
-									        		
-		                                </div>
-		                                
-		                                
+									        		</c:forEach> 
+									        		</div>
 		                                <div class="row">
 		                                    <div class="col-sm-2">
 		                                    </div>
@@ -556,6 +623,10 @@
 		                                        <input type="submit" class="btn btn-primary btn-sm" value="Register" />
 		                                    </div>
 		                                </div>
+		                                </div>
+		                                </div>
+		                                
+		                                
 	    							</form:form>
 	                                
 	                            </div>
@@ -578,14 +649,14 @@
 				</div>
 			</div>
 	<div class="row">
-		<div class="col-md-1"></div>
-		<div class="col-md-10">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
 
 				<div id="loader"></div>						
 
 			<div id="results"></div>
 		</div>
-		<div class="col-md-1"></div>
+		<div class="col-md-2"></div>
 	</div>
 			<div class="row">
 				<div class="col-md-4"></div>

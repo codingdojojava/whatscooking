@@ -56,21 +56,16 @@ public class WhatsCookingCtrl {
 	}
 	
 	@PostMapping("/register")
-<<<<<<< HEAD
-	public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
-		
-=======
+
 	public String registration(@Valid @ModelAttribute("userInfo") User user, BindingResult result, Model model) {
 //		validate user and populate result if it has errors
->>>>>>> master
+
 		userValidator.validate(user, result);
 		
 		if (result.hasErrors()) {
 			return "index";
 		}
-<<<<<<< HEAD
 
-=======
 		
 		Week temp = new Week();
 		temp.setSelected(true);
@@ -81,7 +76,6 @@ public class WhatsCookingCtrl {
 		
 //		if success this will NOTE! Only adds a user role to user. This is where you place your role logic
 //		check for admin
->>>>>>> master
 		whatsCookingServices.saveWithUserRole(user);
 		return "redirect:/";
 	}
