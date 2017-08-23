@@ -27,8 +27,8 @@
 	
 	<fieldset>
 	<legend>Register</legend>
-    		<p><form:errors path="user.*"/></p>
-	    <form:form method="POST" action="/register" modelAttribute="user">
+    		<p><form:errors path="userInfo.*"/></p>
+	    <form:form method="POST" action="/register" modelAttribute="userInfo">
 	        <p>
 	            <form:label path="username">Email:</form:label>
 	            <form:input path="username"/>
@@ -48,6 +48,25 @@
 	        <p>
 	            <form:label path="passwordConfirmation">Password Confirmation:</form:label>
 	            <form:password path="passwordConfirmation"/>
+	        </p>
+	        <p>
+	        		<form:hidden path="diets"/>
+	        		<form:hidden path="allergies"/> 
+	        		<label>Diets:</label>
+	        		<c:forEach var="diet" items="${diets}">
+	        			<div>
+	        				<form:checkbox path="diets" value="${diet}"/><label>${diet.name}</label>
+	        			</div>
+	        		</c:forEach>
+	        </p>
+	        <p>
+	        		
+	        		<label>Allergies:</label>
+	        		<c:forEach var="allergy" items="${allergies}">
+	        			<div>
+	        				<form:checkbox path="allergies" value="${allergy}"/><label>${allergy.name}</label>
+	        			</div>
+	        		</c:forEach>
 	        </p>
 	        <input type="submit" value="Register!"/>
 	    </form:form>
