@@ -518,10 +518,6 @@
 		                                	   <div class="row">
 			                                    <label class="col-sm-2 control-label">Allergies:</label>
 			                                    	<c:forEach var="allergy" items="${allergies}" varStatus="loop">
-													<%-- <c:if test="${loop.index % 3 eq 0 }}">
-														<div class="row">
-														<div class="col-sm-2"></div>
-													</c:if> --%>
 													
 													<c:choose>
 														<c:when test="${loop.index % 2 eq 0 }">
@@ -624,7 +620,7 @@
 	1;b<=Math.min(a.total,a.maxVisible);b++)c=c.concat(['<li data-lp="',b,'"><a href="',g(b),'">',b,"</a></li>"]);a.next&&(b=a.leaps&&a.total>a.maxVisible?Math.min(a.maxVisible+1,a.total):2,c=c.concat(['<li data-lp="',b,'" class="',a.nextClass,'"><a href="',g(b),'">',a.next,"</a></li>"]));a.firstLastUse&&(c=c.concat(['<li data-lp="',a.total,'" class="last"><a href="',g(a.total),'">',a.last,"</a></li>"]));c.push("</ul>");d.find("ul.bootpag").remove();d.append(c.join(""));c=d.find("ul.bootpag");d.find("li").click(function(){var b=
 	h(this);if(!b.hasClass(a.disabledClass)&&!b.hasClass(a.activeClass)){var c=parseInt(b.attr("data-lp"),10);l.find("ul.bootpag").each(function(){m(h(this),c)});l.trigger("page",c)}});m(c,a.page)})}})(jQuery,window);
 	 </script>
-	 
+
 	<script type="text/javascript">
 	
 	function openNav() {
