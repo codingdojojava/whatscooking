@@ -181,7 +181,17 @@ public class WhatsCookingCtrl {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		model.addAttribute("currentUser", user);
+		model.addAttribute("user", user);
+		model.addAttribute("diets", dietServ.getDiets());
+		model.addAttribute("allergies", allergyServ.getAllergies());
+		model.addAttribute("favoritess", user.getFavorites());
 		return "profile";
+	}
+	
+	@PostMapping("/home/profile")
+	public String editProfile(@Valid @ModelAttribute("user") User currUser, BindingResult result) {
+		whatsCookingServices.updateProfile(currUser);
+		return "redirect:/home/profile";
 	}
 	
 	

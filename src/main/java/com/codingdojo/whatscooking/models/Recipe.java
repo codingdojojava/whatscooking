@@ -19,7 +19,7 @@ public class Recipe {
 	private long id;
 	
 	private String name;
-
+	
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
         name = "userfavorites", 
