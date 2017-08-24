@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +19,19 @@
 	#logout{
 		border: none;
 		background: none;
+	}
+	body:before {
+		content: "";
+		position: absolute;
+		background: url(http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_957/v1503470664/brooke-lark-158017_bh7gw4.jpg);
+		background-size: cover;
+		z-index: -1; /* Keep the background behind the content */
+		height: 20%; width: 20%; /* Using Glen Maddern's trick /via @mente */
+	
+		/* don't forget to use the prefixes you need */
+		transform: scale(5);
+		transform-origin: top left;
+		filter: blur(2px);
 	}
 </style>
 <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -86,39 +100,60 @@
 	    <a href="http://clashhacks.in/">Link</a>
 	</div>
 
-	<h2>Current plan</h2>
+	<h2>${current.firstname}'s plan</h2>
 	<div id="week">
-		<div class="day">
+		<div class="day onimage" style='width:150px; height: 150px;'>
+			<div class='overlay'>
+				<p class='text'><a href="/week/Monday">Monday</a></p>
+			</div>
 			 <div id="monimgs">
 			 	
 			 </div>
 		</div>
-		<div class="day">
+		<div class="day onimage" style='width:150px; height: 150px;'>
+			<div class='overlay'>
+				<p class='text'><a href="/week/Tuesday">Tuesday</a></p>
+			</div>
 			 <div id="tueimgs">
 			 	
 			 </div>
 		</div>
-		<div class="day">
+		<div class="day onimage" style='width:150px; height: 150px;'>
+			<div class='overlay'>
+				<p class='text'><a href="/week/Wednesday">Wednesday</a></p>
+			</div>
 			 <div id="wedimgs">
 			 	
 			 </div>
 		</div>
-		<div class="day">
+		<div class="day onimage" style='width:150px; height: 150px;'>
+			<div class='overlay'>
+				<p class='text'><a href="/week/Thursday">Thursday</a></p>
+			</div>
 			 <div id="thurimgs">
 			 	
 			 </div>
 		</div>
-		<div class="day">
+		<div class="day onimage" style='width:150px; height: 150px;'>
+			<div class='overlay'>
+				<p class='text'><a href="/week/Friday">Friday</a></p>
+			</div>
 			 <div id="friimgs">
 			 	
 			 </div>
 		</div>
-		<div class="day">
+		<div class="day onimage" style='width:150px; height: 150px;'>
+			<div class='overlay'>
+				<p class='text'><a href="/week/Saturday">Saturday</a></p>
+			</div>
 			 <div id="satimgs">
 			 	
 			 </div>
 		</div>
-		<div class="day">
+		<div class="day onimage" style='width:150px; height: 150px;'>
+			<div class='overlay'>
+				<p class='text'><a href="/week/Sunday">Sunday</a></p>
+			</div>
 			 <div id="sunimgs">
 			 	
 			 </div>
@@ -137,14 +172,14 @@
 	        success: function(res){
 				var tempStr = "";
 				for(var i = 0; i < res.matches.length; i++){
-					tempStr += "<img style='height:200px; width:200px;' src='" + res.matches[i].imageUrlsBySize[90] + 
-					"' alt='match" + i + "'><a href='/addtoplan/" + res.matches[i].id + "'>Add to plan</a> <a href='/favorite/"+ res.matches[i].id +"'>Favorite</a> <a href=''>See more</a>"
+					tempStr += "<div style='margin: 10px;' class='onimage'><img class='image' src='" + res.matches[i].imageUrlsBySize[90] + 
+					"' alt='match" + i + "'><div class='overlay'><a class='text' style='top:20%' href='/addtoplan/" + res.matches[i].id + "'>Add to plan</a> <a class='text' style='top:50%' href='/favorite/"+ res.matches[i].id +"'><div><span class='star glyphicon glyphicon-star-empty'></span></div></a> <a class='text' style='top:80%' href='/recipe/"+ res.matches[i].id +"'>"+ res.matches[i].recipeName +"</a></div></div>"
 				}
 				$("#forYou").html(tempStr);
 	        }
     		})
     		$.ajax({
-	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.monRecipes[0].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.monRecipes[fn:length(current.selected.monRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
@@ -152,7 +187,7 @@
 	        }
     		})
     		$.ajax({
-	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.tueRecipes[0].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.tueRecipes[fn:length(current.selected.tueRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
@@ -160,7 +195,7 @@
 	        }
     		})
     		$.ajax({
-	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.wedRecipes[0].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.wedRecipes[fn:length(current.selected.wedRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
@@ -168,7 +203,7 @@
 	        }
     		})
     		$.ajax({
-	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.thurRecipes[0].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.thurRecipes[fn:length(current.selected.thurRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
@@ -176,7 +211,7 @@
 	        }
     		})
     		$.ajax({
-	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.friRecipes[0].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.friRecipes[fn:length(current.selected.friRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
@@ -184,7 +219,7 @@
 	        }
     		})
     		$.ajax({
-	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.satRecipes[0].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.satRecipes[fn:length(current.selected.satRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
@@ -192,7 +227,7 @@
 	        }
     		})
     		$.ajax({
-	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.sunRecipes[0].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.sunRecipes[fn:length(current.selected.sunRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
