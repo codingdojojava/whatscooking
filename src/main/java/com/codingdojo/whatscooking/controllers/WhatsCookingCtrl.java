@@ -170,4 +170,80 @@ public class WhatsCookingCtrl {
 	public String showFavorites() {
 		return "allfavorites";
 	}
+	
+	@RequestMapping("recipe/{recipe}")
+	public String showRecipe(Principal principal, @PathVariable("recipe") String recipe, Model model) {
+		model.addAttribute("recipeId", recipe);
+		return "showrecipe";
+	}
+	
+	@RequestMapping("testajax")
+	public String pls() {
+		return "test";
+	}
+	
+	@RequestMapping("week/{day}")
+	public String showDay(Principal principal, Model model, @PathVariable("day") String day) {
+		String email = principal.getName();
+		User user = whatsCookingServices.findByUsername(email);
+		model.addAttribute("current", user);
+		if(day.equals("Monday")) {
+			model.addAttribute("recipes", user.getSelected().getMonRecipes());
+		}
+		else if(day.equals("Tuesday")) {
+			model.addAttribute("recipes", user.getSelected().getTueRecipes());
+		}
+		else if(day.equals("Wednesday")) {
+			model.addAttribute("recipes", user.getSelected().getWedRecipes());
+		}
+		else if(day.equals("Thursday")) {
+			model.addAttribute("recipes", user.getSelected().getThurRecipes());
+		}
+		else if(day.equals("Friday")) {
+			model.addAttribute("recipes", user.getSelected().getFriRecipes());
+		}
+		else if(day.equals("Saturday")) {
+			model.addAttribute("recipes", user.getSelected().getSatRecipes());
+		}
+		else{
+			model.addAttribute("recipes", user.getSelected().getSunRecipes());
+		}
+		return "day";
+	}
+
+	@RequestMapping("{day}/remove/{recipe}")
+	public String removeFromPlan(Principal principal, @PathVariable("day") String day, @PathVariable("recipe") String recipe){
+		User user = whatsCookingServices.findByUsername(principal.getName());
+		if(day.equals("Monday"))
+			user.getSelected().getMonRecipes().remove(recipeServ.getByName(recipe));
+		else if(day.equals("Tuesday"))
+			user.getSelected().getTueRecipes().remove(recipeServ.getByName(recipe));
+		else if(day.equals("Wednesday"))
+			user.getSelected().getWedRecipes().remove(recipeServ.getByName(recipe));
+		else if(day.equals("Thursday"))
+			user.getSelected().getThurRecipes().remove(recipeServ.getByName(recipe));
+		else if(day.equals("Friday"))
+			user.getSelected().getFriRecipes().remove(recipeServ.getByName(recipe));
+		else if(day.equals("Saturday"))
+			user.getSelected().getSatRecipes().remove(recipeServ.getByName(recipe));
+		else if(day.equals("Sunday"))
+			user.getSelected().getSunRecipes().remove(recipeServ.getByName(recipe));
+		weekServ.updateWeek(user.getSelected());
+		return "redirect:/week/"+day;
+	}
+
+	@RequestMapping("groceries/add/{recipe}")
+	public String addToGroceries(Principal principal, @PathVariable("recipe") String recipe){
+		User user = userServ.findByEmail(principal.getName());
+		if(recipeServ.getByName(recipe) == null)
+		{
+			Recipe tempRecipe = new Recipe();
+			tempRecipe.setName(recipe);
+			recipeServ.addRecipe(tempRecipe);
+			
+		}
+		user.getShopping().add(recipeServ.getByName(recipe));
+		userServ.updateUser(user);
+		return "redirect:/home";
+	}
 }
