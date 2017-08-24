@@ -15,30 +15,28 @@
 		width: 150px;
 		border: 1px solid black;
 		vertical-align:top;
+		margin: 10px;
 	}
 	#logout{
 		border: none;
 		background: none;
 	}
-	body:before {
-		content: "";
-		position: absolute;
-		background: url(http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_957/v1503470664/brooke-lark-158017_bh7gw4.jpg);
-		background-size: cover;
-		z-index: -1; /* Keep the background behind the content */
-		height: 20%; width: 20%; /* Using Glen Maddern's trick /via @mente */
 	
-		/* don't forget to use the prefixes you need */
-		transform: scale(5);
-		transform-origin: top left;
-		filter: blur(2px);
+	.foodname{
+		width:100%;
+		border: none;
+		box-shadow: none;
+		height:40%;
 	}
+	
 </style>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<script src="//masonry.desandro.com/masonry.pkgd.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.js"></script>
 </head>
 <body>
 	<div id="flipkart-navbar" style="margin-top: 20px;">
@@ -100,11 +98,11 @@
 	    <a href="http://clashhacks.in/">Link</a>
 	</div>
 
-	<h2>${current.firstname}'s plan</h2>
+	<h2 style='margin-left: 10%;'>${current.firstname}'s plan</h2>
 	<div id="week">
 		<div class="day onimage" style='width:150px; height: 150px;'>
 			<div class='overlay'>
-				<p class='text'><a href="/week/Monday">Monday</a></p>
+				<p><a class='text' href="/week/Monday">Monday</a></p>
 			</div>
 			 <div id="monimgs">
 			 	
@@ -112,7 +110,7 @@
 		</div>
 		<div class="day onimage" style='width:150px; height: 150px;'>
 			<div class='overlay'>
-				<p class='text'><a href="/week/Tuesday">Tuesday</a></p>
+				<p ><a class='text' href="/week/Tuesday">Tuesday</a></p>
 			</div>
 			 <div id="tueimgs">
 			 	
@@ -120,7 +118,7 @@
 		</div>
 		<div class="day onimage" style='width:150px; height: 150px;'>
 			<div class='overlay'>
-				<p class='text'><a href="/week/Wednesday">Wednesday</a></p>
+				<p><a class='text' href="/week/Wednesday">Wednesday</a></p>
 			</div>
 			 <div id="wedimgs">
 			 	
@@ -128,7 +126,7 @@
 		</div>
 		<div class="day onimage" style='width:150px; height: 150px;'>
 			<div class='overlay'>
-				<p class='text'><a href="/week/Thursday">Thursday</a></p>
+				<p><a class='text' href="/week/Thursday">Thursday</a></p>
 			</div>
 			 <div id="thurimgs">
 			 	
@@ -136,7 +134,7 @@
 		</div>
 		<div class="day onimage" style='width:150px; height: 150px;'>
 			<div class='overlay'>
-				<p class='text'><a href="/week/Friday">Friday</a></p>
+				<p><a class='text' href="/week/Friday">Friday</a></p>
 			</div>
 			 <div id="friimgs">
 			 	
@@ -144,7 +142,7 @@
 		</div>
 		<div class="day onimage" style='width:150px; height: 150px;'>
 			<div class='overlay'>
-				<p class='text'><a href="/week/Saturday">Saturday</a></p>
+				<p><a class='text' href="/week/Saturday">Saturday</a></p>
 			</div>
 			 <div id="satimgs">
 			 	
@@ -152,30 +150,48 @@
 		</div>
 		<div class="day onimage" style='width:150px; height: 150px;'>
 			<div class='overlay'>
-				<p class='text'><a href="/week/Sunday">Sunday</a></p>
+				<p><a class='text' href="/week/Sunday">Sunday</a></p>
 			</div>
 			 <div id="sunimgs">
 			 	
 			 </div>
 		</div>
 	</div>
-
-	<h2>Most popular:</h2>
-
-	<h2>Made for you:</h2>
-	<div id="forYou">
+	<div id="suggestions">
 	</div>
 	<script>
+		$(document).on('click', '#closeadd', function(e){
+            e.preventDefault();
+            editurl='/users/delete/'+$(this).attr('info');
+            var correct='#myModal' + $(this).attr('info');
+			$('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+			$(correct).modal('hide');
+
+        })
 		$.ajax({
 	        url:"${url}",
 	        method:'get',
 	        success: function(res){
-				var tempStr = "";
+				console.log(res);
+				var tempStr = "<h2 style='margin-left: 10%;'>Made for you:</h2><div id='container'></div>";
 				for(var i = 0; i < res.matches.length; i++){
-					tempStr += "<div style='margin: 10px;' class='onimage'><img class='image' src='" + res.matches[i].imageUrlsBySize[90] + 
-					"' alt='match" + i + "'><div class='overlay'><a class='text' style='top:20%' href='/addtoplan/" + res.matches[i].id + "'>Add to plan</a> <a class='text' style='top:50%' href='/favorite/"+ res.matches[i].id +"'><div><span class='star glyphicon glyphicon-star-empty'></span></div></a> <a class='text' style='top:80%' href='/recipe/"+ res.matches[i].id +"'>"+ res.matches[i].recipeName +"</a></div></div>"
+					tempStr+="<div class='onimage item'>";
+					tempStr+="<img class='image' src='" + res.matches[i].imageUrlsBySize[90]+ "' alt='match'>";
+					tempStr+="<div class='overlay'>";
+					tempStr+="<a class='text' style='top:10%; left: 90%;' data-toggle='modal' href='#myModal"+res.matches[i].id+"'>";
+					tempStr+="<div><span class='glyphicon glyphicon-plus'></span></div>";
+					tempStr+="</a>";
+					tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+					
+					tempStr+="<a id='favorite' class='text' style='top:27%; left: 90%;' href='/favorite/"+res.matches[i].id+"'>";
+					tempStr+="<div><span class='star glyphicon glyphicon-star-empty'></span></div>";
+					tempStr+="</a> ";
+					tempStr+="<a class='text foodname' style='top:80%' href='/recipe/"+res.matches[i].id+"'>"+res.matches[i].recipeName+"</a>";
+					tempStr+="</div>";
+					tempStr+="</div>";
 				}
-				$("#forYou").html(tempStr);
+				$("#suggestions").html(tempStr);
 	        }
     		})
     		$.ajax({
@@ -234,6 +250,36 @@
 	            $("#sunimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
     		})
+
+			$("#search").submit(function(e){
+				e.preventDefault();
+				$.ajax({
+					url:'http://api.yummly.com/v1/api/recipes?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee&q='+$("#keyword").val()+'&maxResult=20',
+					method:'get',
+					success: function(res){
+						if($("#keyword").val() != ""){
+							var tempStr = '<h2 style="margin-left: 10%;">'+$("#keyword").val()+':</h2>';
+							for(var i = 0; i < res.matches.length; i++){
+								tempStr+="<div class='onimage'>";
+								tempStr+="<img class='image' src='" + res.matches[i].imageUrlsBySize[90]+ "' alt='match'>";
+								tempStr+="<div class='overlay'>";
+								tempStr+="<a class='text' style='top:20%' data-toggle='modal' href='#myModal"+res.matches[i].id+"'>";
+								tempStr+="<div><span class='glyphicon glyphicon-plus'></span></div>";
+								tempStr+="</a>";
+								tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+								
+								tempStr+="<a id='favorite' class='text' style='top:50%' href='/favorite/"+res.matches[i].id+"'>";
+								tempStr+="<div><span class='star glyphicon glyphicon-star-empty'></span></div>";
+								tempStr+="</a> ";
+								tempStr+="<a class='text' style='top:80%' href='/recipe/"+res.matches[i].id+"'>"+res.matches[i].recipeName+"</a>";
+								tempStr+="</div>";
+								tempStr+="</div>";
+							}
+						}
+						$("#suggestions").html(tempStr);
+	        		}
+				})
+			})
 	</script>
 </body>
 </html>
