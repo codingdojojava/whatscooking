@@ -1,4 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,6 +14,13 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style>
+	.day{
+		display:inline-block;
+		height: 150px;
+		width: 150px;
+		border: 1px solid black;
+		vertical-align:top;
+	}
 .center {
     margin-top:50px;   
 }
@@ -131,24 +140,92 @@
 		          </h3>
 		          <h3>Allergies: 
 		          	<c:forEach items="${currentUser.allergies}" var="allergy">
-		          		<c:out value="${diet.name}" />
+		          		<c:out value="${allergy.name}" />
 		          	</c:forEach>
 		          </h3>
 		        		</div>
 		        </div>
 		        <div class="tab-pane fade in bgtab" id="tab2">
-		          	        		<div class="row tabcontent">
-		          <h3>This is tab 1</h3>
-		        		</div>
+		          <div class="row tabcontent" id="favtab">
+		          
+		          
+		        	  </div>
 		        </div>
 		        <div class="tab-pane fade in bgtab" id="tab3">
-		          	        		<div class="row tabcontent">
-		          <h3>This is tab 1</h3>
+		          	 <div class="row tabcontent" id="groctab">
+
 		        		</div>
 		        </div>
 		        <div class="tab-pane fade in bgtab" id="tab4">
-		          	        		<div class="row tabcontent">
-		          <h3>This is tab 1</h3>
+		          <div class="row tabcontent" id="plantab">
+		          	<h2>${currentUser.firstname}'s plan</h2>
+					<div id="week">
+						<div class="day onimage" style='width:150px; height: 150px;'>
+							<div class='overlay'>
+								<p class='text'><a href="/week/Monday">Monday</a></p>
+							</div>
+							 <div id="monimgs">
+							 	
+							 </div>
+						</div>
+						<div class="day onimage" style='width:150px; height: 150px;'>
+							<div class='overlay'>
+								<p class='text'><a href="/week/Tuesday">Tuesday</a></p>
+							</div>
+							 <div id="tueimgs">
+							 	
+							 </div>
+						</div>
+						<div class="day onimage" style='width:150px; height: 150px;'>
+							<div class='overlay'>
+								<p class='text'><a href="/week/Wednesday">Wednesday</a></p>
+							</div>
+							 <div id="wedimgs">
+							 	
+							 </div>
+						</div>
+						<div class="day onimage" style='width:150px; height: 150px;'>
+							<div class='overlay'>
+								<p class='text'><a href="/week/Thursday">Thursday</a></p>
+							</div>
+							 <div id="thurimgs">
+							 	
+							 </div>
+						</div>
+						<div class="day onimage" style='width:150px; height: 150px;'>
+							<div class='overlay'>
+								<p class='text'><a href="/week/Friday">Friday</a></p>
+							</div>
+							 <div id="friimgs">
+							 	
+							 </div>
+						</div>
+						<div class="day onimage" style='width:150px; height: 150px;'>
+							<div class='overlay'>
+								<p class='text'><a href="/week/Saturday">Saturday</a></p>
+							</div>
+							 <div id="satimgs">
+							 	
+							 </div>
+						</div>
+						<div class="day onimage" style='width:150px; height: 150px;'>
+							<div class='overlay'>
+								<p class='text'><a href="/week/Sunday">Sunday</a></p>
+							</div>
+							 <div id="sunimgs">
+							 	
+							 </div>
+						</div>
+					</div>
+		          
+		          <c:forEach items="${plans}" var="plan" >
+		          
+		          <form method="POST" action="/home/profile/${plan.id}/change-selected">
+			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			        <input class="links" id="logout" type="submit" value="${plan.name}" />
+			    		</form>
+		          </c:forEach>
+		          
 		        		</div>
 		        </div>
 		      </div>
@@ -169,33 +246,167 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h3 class="modal-title" id="lineModalLabel">My Modal</h3>
+			<h3 class="modal-title" id="lineModalLabel">Edit Profile</h3>
 		</div>
 		<div class="modal-body">
 			
             <!-- content goes here -->
-			<form>
+			<form:form method="POST" action="/home/profile" modelAttribute="user">
+			<form:hidden path="id"/>
+			<form:hidden path="favorites"/>
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <form:label path="firstname">First Name: </form:label>
+                <form:input cssClass="form-control" path="firstname"/>
               </div>
               <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <input type="file" id="exampleInputFile">
-                <p class="help-block">Example block-level help text here.</p>
+                <form:label path="lastname">Last Name: </form:label>
+                <form:input cssClass="form-control" path="lastname"/>
               </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Check me out
-                </label>
+              <div class="form-group">
+                <form:label path="username">Email: </form:label>
+                <form:input cssClass="form-control" path="username"/>
               </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+				<div class="form-group">
+		                                		<div class="row">
+			                                    <label class="col-sm-2 control-label">Diets:</label>
+			                                    
+			                                    <c:forEach var="diet" items="${diets}" varStatus="loop">
+													
+													<c:choose>
+													
+														
+ 														<c:when test="${loop.index eq 2}">
+														
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${diet.name}</label>
+												        			</div>
+															</div>
+															
+														</c:when> 
+														
+ 														<c:when test="${loop.index eq 5}">
+														
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${diet.name}</label>
+												        			</div>
+															</div>
+															
+														</c:when> 
+														
+ 														<c:when test="${loop.index eq 3 }">
+									        					<div class="row">
+									        					<div class="col-sm-2"></div>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${diet.name}</label>
+											        			</div>
+														</c:when> 
+														
+														<c:otherwise>
+											        			<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${diet.name}</label>
+											        			</div>
+														</c:otherwise>
+														
+													</c:choose>
+													
+			                                    </c:forEach>
+			                  				</div>
+			                  				
+			                  			<div class="form-group">
+		                                	   <div class="row">
+			                                    <label class="col-sm-2 control-label">Allergies:</label>
+	 		                                    	<c:forEach var="allergy" items="${allergies}" varStatus="loop">
+													
+													<c:choose>
+													
+														<c:when test="${loop.index eq 2 }">
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${allergy.name}</label>
+												        			</div>
+															</div>
+														</c:when>
+														<c:when test="${loop.index eq 5 }">
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${allergy.name}</label>
+												        			</div>
+															</div>
+														</c:when>
+														<c:when test="${loop.index eq 8 }">
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${allergy.name}</label>
+												        			</div>
+															</div>
+														</c:when>
+														<c:when test="${loop.index eq 9 }">
+																<div class="row">
+									        						<div class="col-sm-2"></div>
+																<div class="col-sm-1 checkbox_container">
+												        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+												        			</div>
+												        			<div class="col-sm-2 label_checkbox">
+												        				<label>${allergy.name}</label>
+												        			</div>
+															</div>
+														</c:when>
+														
+														<c:when test="${loop.index eq 3 }">
+									        					<div class="row">
+									        					<div class="col-sm-2"></div>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${allergy.name}</label>
+											        			</div>
+														</c:when>
+														<c:when test="${loop.index eq 6 }">
+									        					<div class="row">
+									        					<div class="col-sm-2"></div>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${allergy.name}</label>
+											        			</div>
+														</c:when>
+														<c:otherwise>
+											        			<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="allergies" value="${allergy}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${allergy.name}</label>
+											        			</div>
+														</c:otherwise>
+													</c:choose>
+									        		</c:forEach> 
+									        		</div>	
+			                  				
 
+              <button type="submit" class="btn btn-default">Update Changes</button>
+
+
+            </form:form>
 		</div>
 		<div class="modal-footer">
 			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
@@ -205,7 +416,7 @@
 				<div class="btn-group btn-delete hidden" role="group">
 					<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
 				</div>
-				<div class="btn-group" role="group">
+				<div class="btn-group hidden" role="group">
 					<button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Save</button>
 				</div>
 			</div>
@@ -223,7 +434,112 @@
 	       // $(".tab").addClass("active"); // instead of this do the below 
 	       $(this).removeClass("btn-default").addClass("btn-primary");   
 	   });
-	   });
+	   
+
+   
+   <c:forEach items="${favoritess}" var="favorite" varStatus="loop">
+	   $.ajax({
+	       url:"http://api.yummly.com/v1/api/recipe/${favorite.name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	       method:'get',
+	       success: function(res){
+				console.log(res);
+				var imgUrl = res.images[0]["hostedSmallUrl"];
+	
+				$("#favtab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><p>"+res.cookTime+"</p>");
+	       
+// 			$("#slide-content").append("<div id='slide-content-${loop.index}'><h2>"+ res.name +"</h2><p>Source: <a href='#'>"+res.source.sourceDisplayName+"</a></p><p>Rating: "+res.rating+"</p><p>Prep Time: "+res.prepTime+"</p><p>Cook Time: "+res.cookTime+"</p><p>Total Time: "+res.totalTime+"</p></div>");
+//				$(".hide-bullets").append("<li class='col-sm-2'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+res.images[0]["hostedLargeUrl"]+"'></a></li>"); 
+				
+	       }
+		})
+   
+	</c:forEach>
+	   
+   <c:forEach items="${shoppings}" var="favorite" varStatus="loop">
+	   $.ajax({
+	       url:"http://api.yummly.com/v1/api/recipe/${favorite.name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	       method:'get',
+	       success: function(res){
+				console.log(res);
+				var imgUrl = res.images[0]["hostedSmallUrl"];
+	
+				$("#groctab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><p>Ingredients: </p><ul id='ingredientList-${loop.index}'></ul>");
+	       
+				var ingred = res.ingredientLines;
+				console.log(ingred.length);
+				
+				for(var i=0; i < ingred.length; i++) {
+					$("#ingredientList-${loop.index}").append("<li>"+ingred[i]+"</li>");
+				}
+
+				
+				
+// 			$("#slide-content").append("<div id='slide-content-${loop.index}'><h2>"+ res.name +"</h2><p>Source: <a href='#'>"+res.source.sourceDisplayName+"</a></p><p>Rating: "+res.rating+"</p><p>Prep Time: "+res.prepTime+"</p><p>Cook Time: "+res.cookTime+"</p><p>Total Time: "+res.totalTime+"</p></div>");
+//				$(".hide-bullets").append("<li class='col-sm-2'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+res.images[0]["hostedLargeUrl"]+"'></a></li>"); 
+				
+	       }
+		})
+   
+	</c:forEach>
+	   
+	   $.ajax({
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.monRecipes[fn:length(current.selected.monRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        method:'get',
+	        success: function(res){
+	            console.log(res.images[0].hostedLargeUrl);
+	            $("#monimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	        }
+   		})
+   		$.ajax({
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.tueRecipes[fn:length(current.selected.tueRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        method:'get',
+	        success: function(res){
+	            console.log(res.images[0].hostedLargeUrl);
+	            $("#tueimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	        }
+   		})
+   		$.ajax({
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.wedRecipes[fn:length(current.selected.wedRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        method:'get',
+	        success: function(res){
+	            console.log(res.images[0].hostedLargeUrl);
+	            $("#wedimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	        }
+   		})
+   		$.ajax({
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.thurRecipes[fn:length(current.selected.thurRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        method:'get',
+	        success: function(res){
+	            console.log(res.images[0].hostedLargeUrl);
+	            $("#thurimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	        }
+   		})
+   		$.ajax({
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.friRecipes[fn:length(current.selected.friRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        method:'get',
+	        success: function(res){
+	            console.log(res.images[0].hostedLargeUrl);
+	            $("#friimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	        }
+   		})
+   		$.ajax({
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.satRecipes[fn:length(current.selected.satRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        method:'get',
+	        success: function(res){
+	            console.log(res.images[0].hostedLargeUrl);
+	            $("#satimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	        }
+   		})
+   		$.ajax({
+	        url:"http://api.yummly.com/v1/api/recipe/${current.selected.sunRecipes[fn:length(current.selected.sunRecipes)-1].name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
+	        method:'get',
+	        success: function(res){
+	            console.log(res.images[0].hostedLargeUrl);
+	            $("#sunimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	        }
+   		})
+
+	});
    </script>
 </body>
 </html>

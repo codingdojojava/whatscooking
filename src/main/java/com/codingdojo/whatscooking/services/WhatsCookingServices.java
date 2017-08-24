@@ -39,4 +39,9 @@ public class WhatsCookingServices {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    
+    public void updateProfile(User user) {
+    		userRepository.save(user);
+    }
+    
 }

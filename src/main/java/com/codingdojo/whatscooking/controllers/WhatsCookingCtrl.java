@@ -80,6 +80,7 @@ public class WhatsCookingCtrl {
 		Week temp = new Week();
 		temp.setUser(user);
 		temp.setUserSelected(user);
+		temp.setName("Week 1");
 		
 		List<Week> tempWeeks = new ArrayList<>();
 		user.setWeeks(tempWeeks);
@@ -251,14 +252,40 @@ public class WhatsCookingCtrl {
 		userServ.updateUser(user);
 		return "redirect:/home";
 	}
+	
 	@RequestMapping("/home/profile")
 	public String showProfile(Principal principal, Model model) {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		model.addAttribute("currentUser", user);
+		model.addAttribute("current", user);
+		model.addAttribute("user", user);
+		model.addAttribute("diets", dietServ.getDiets());
+		model.addAttribute("allergies", allergyServ.getAllergies());
+		model.addAttribute("favoritess", user.getFavorites());
+		model.addAttribute("shoppings", user.getShopping());
+		model.addAttribute("plans", user.getWeeks());
 		return "profile";
 	}
 	
+	@PostMapping("/home/profile")
+	public String editProfile(@Valid @ModelAttribute("user") User currUser, BindingResult result) {
+		whatsCookingServices.updateProfile(currUser);
+		return "redirect:/home/profile";
+	}
 	
+	@PostMapping("/home/profile/{p-id}/change-selected")
+	public String changeSelectedPlan(@PathVariable("p-id") Long id, Principal principal, @Valid @ModelAttribute("user") User currUser, BindingResult result) {
+		String username = principal.getName();
+		User user = whatsCookingServices.findByUsername(username);
+		Week temp = weekServ.findWeek(id);
+		temp.setUserSelected(user);
+		List<Week> tempWeeks = new ArrayList<>();
+		user.setWeeks(tempWeeks);
+		user.getWeeks().add(temp);
+		user.setSelected(user.getWeeks().get(user.getWeeks().size()-1));
+		whatsCookingServices.updateProfile(user);
+		return "redirect:/home/profile";
+	}
 	
 }

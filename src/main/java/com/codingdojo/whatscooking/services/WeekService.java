@@ -19,4 +19,8 @@ public class WeekService {
 	public void updateWeek(Week week) {
 		weekRepo.save(week);
 	}
+	
+	public Week findWeek(Long id) {
+		return weekRepo.findOne(id);
+	}
 }
