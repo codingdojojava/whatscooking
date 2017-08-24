@@ -166,8 +166,13 @@ public class WhatsCookingCtrl {
 		return "redirect:/home";
 	}
 	
-	@RequestMapping("favorites")
-	public String showFavorites() {
+	@RequestMapping("/home/favorites")
+	public String showFavorites(Principal principal, Model model) {
+		String username = principal.getName();
+		User user = whatsCookingServices.findByUsername(username);
+		List<Recipe> favorites = user.getFavorites();
+		model.addAttribute("currentUser", user);
+		model.addAttribute("favorites", favorites);
 		return "allfavorites";
 	}
 	
@@ -246,4 +251,14 @@ public class WhatsCookingCtrl {
 		userServ.updateUser(user);
 		return "redirect:/home";
 	}
+	@RequestMapping("/home/profile")
+	public String showProfile(Principal principal, Model model) {
+		String username = principal.getName();
+		User user = whatsCookingServices.findByUsername(username);
+		model.addAttribute("currentUser", user);
+		return "profile";
+	}
+	
+	
+	
 }

@@ -51,7 +51,7 @@
     </form></li>
 	              	<li class="upper-links"><a href="/profile" class="links">My Profile</a></li>
 	                <li class="upper-links">
-	                    <a class="links" href="#">
+	                    <a class="links" href="/home/favorites">
 	                        <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-heart"></span>
 	                    </a>
 	                </li>
