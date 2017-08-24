@@ -19,6 +19,8 @@ public class Week {
 	@GeneratedValue
 	private long id;
 	
+	private String name;
+	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name="userSelected_id")
 	private User userSelected;
@@ -161,6 +163,14 @@ public class Week {
 
 	public void setUserSelected(User userSelected) {
 		this.userSelected = userSelected;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	
