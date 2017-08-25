@@ -357,10 +357,10 @@ public class WhatsCookingCtrl {
 		return "showgroc";
 	}
 	@RequestMapping("/home/favorites/{favorite-id}/delete")
-	public String removeFavorite(@PathVariable(value="favorite-id") Long id, Principal principal, Model model) {
+	public String removeFavorite(@PathVariable(value="favorite-id") String id, Principal principal, Model model) {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
-		Recipe recipe = recipeServ.getRById(id);
+		Recipe recipe = recipeServ.getByName(id);
 		whatsCookingServices.removeRecipeFromFavorites(user, recipe);
 		model.addAttribute("favoritess", user.getFavorites());
 		return "showfavs";
