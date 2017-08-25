@@ -21,11 +21,7 @@
             <ul class="largenav pull-right">
                 <li class="upper-links"><a class="links" data-toggle="modal" data-target="#myModal" href="#">Login / Registration</a></li>
               	<li class="upper-links"><a href="#" class="links">My Profile</a></li>
-                <li class="upper-links">
-                    <a class="links" href="/home/favorites">
-                        <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-heart"></span>
-                    </a>
-                </li>
+				<li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
             </ul>
         </div>
         <div class="row row2">

@@ -241,6 +241,16 @@
 
 			min-height: 100%;
 		}
+		.product_view .modal-dialog{max-width: 800px; width: 100%;}
+        .pre-cost{text-decoration: line-through; color: #a5a5a5;}
+		.space-ten{padding: 10px 0;}
+		.red{
+			color:red;
+		}
+		#logout{
+			border: none;
+			background: none;
+		}
     </style>
     <script>
         $(document).ready(function() {
@@ -280,12 +290,8 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input class="links" id="logout" type="submit" value="Logout" />
     </form></li>
-	              	<li class="upper-links"><a href="/profile" class="links">My Profile</a></li>
-	                <li class="upper-links">
-	                    <a class="links" href="#">
-	                        <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-heart"></span>
-	                    </a>
-	                </li>
+	              	<li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
+					<li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
 	            </ul>
 	        </div>
 	        <div class="row row2">
@@ -314,7 +320,7 @@
 	                <a class="cart-button" style="margin-top: 4px;">
 	                		<span style="font-size: 13px;" class="glyphicon glyphicon-shopping-cart"></span>
 	                     Grocery List
-	                    <span class="item-number ">0</span>
+	                    <span class="item-number " id='grocnum'>${numgrocs}</span>
 	                </a>
 	            </div>
 	        </div>
@@ -337,9 +343,9 @@
 						<div style="margin-top: -25px" class="col-md-6 no-pad">
 							<div class="user-pad">
 								<h3 id="name"></h3>
-								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a href="/favorite/${recipeId}">Favorite</a></h4>
-								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a href="/addtoplan/${recipeId}">Add to plan</a></h4>
-								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a href="/groceries/add/${recipeId}">Add to groceries</a></h4>
+								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a id='favorite' href="/favorite/${recipeId}"><span id='favIcon' class="glyphicon glyphicon-star-empty"></span> Favorite</a></h4>
+								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a id='addgroc' href="/groceries/add/${recipeId}"><span id='shopIcon' class="glyphicon glyphicon-shopping-cart"></span> Add to groceries</a></h4>
+								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a id='planadd' data-toggle="modal" href="#planmodal"><span id='plusIcon' class="glyphicon glyphicon-plus"></span> Add to plan</a></h4>
 								<div id="instructions"></div>
 							</div>
 						</div>
@@ -392,7 +398,65 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal fade" id="planmodal" role="dialog">
+				<div class="modal-dialog">
+				
+					<!-- Modal content-->
+					<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Pick a day</h4>
+					</div>
+					<div class="modal-body">
+						<div><a href="/addtoplan/${recipeId}/monday">Monday</a></div>
+						<div><a href="/addtoplan/${recipeId}/tuesday">Tuesday</a></div>
+						<div><a href="/addtoplan/${recipeId}/wednesday">Wednesday</a></div>
+						<div><a href="/addtoplan/${recipeId}/thursday">Thursday</a></div>
+						<div><a href="/addtoplan/${recipeId}/friday">Friday</a></div>
+						<div><a href="/addtoplan/${recipeId}/saturday">Saturday</a></div>
+						<div><a href="/addtoplan/${recipeId}/sunday">Sunday</a></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+					</div>
+					
+				</div>
+				</div>
 	<script>
+		$(document).on('click', '#favorite', function(e){
+			e.preventDefault();
+			$.ajax({
+				url:$(this).attr("href"),
+				method:"get",
+				success:function(res){
+					console.log("fffff");
+					$("#favorite").html("<span id='favIcon' class='glyphicon glyphicon-star' style='color: #46D8D2;'></span> Favorite")
+					$("#favorite").attr('style', 'text-decoration:none;');
+				}
+			})
+		})
+
+		$(document).on('click', '#addgroc', function(e){
+			e.preventDefault();
+			$.ajax({
+				url:$(this).attr("href"),
+				method:"get",
+				success:function(res){
+					console.log("fffff");
+					$("#addgroc").html("<span id='shopIcon' class='glyphicon glyphicon-thumbs-up' style='color: #46D8D2;'></span> Add to groceries")
+					$("#addgroc").attr('style', 'text-decoration:none;');
+					$.ajax({
+						url:"/getGrocNum",
+						method:"get",
+						success:function(res){
+							console.log(res);
+							$("#grocnum").html(res);
+						}
+					})
+				}
+			})
+		})
 	$.ajax({
         url:"http://api.yummly.com/v1/api/recipe/${recipeId}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
         method:'get',
@@ -411,7 +475,7 @@
 			$("#cookTime").html(res.totalTime);
 			$("#numServe").html(res.numberOfServings);
 			$("#image").html("<img src='" + res.images[0].hostedLargeUrl +"' class='img-responsive thumbnail'>");
-			$("#instructions").html("<button style='font-weight:bold;' type='button' class='btn btn-labeled btn-info' href='" + res.attribution.url + "'>See more</button>")
+			$("#instructions").html("<a style='font-weight:bold;' type='button' class='btn btn-labeled btn-info' href='" + res.attribution.url + "'>See more</a>")
 			$("#rating").html(res.rating);
 			$("#numFavorite").html("${numFavs}");
         }

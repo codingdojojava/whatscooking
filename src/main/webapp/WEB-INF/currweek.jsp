@@ -34,7 +34,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <div class="day onimage" style='width:150px; height: 150px;'>
     <div class='overlay2'>
-        <p class='text'><a href="/week/Monday">Monday</a></p>
+        <p><a class='text' href="/week/Monday">Monday</a></p>
     </div>
         <div id="monimgs">
             
@@ -42,7 +42,7 @@
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
     <div class='overlay2'>
-        <p class='text'><a href="/week/Tuesday">Tuesday</a></p>
+        <p><a class='text' href="/week/Tuesday">Tuesday</a></p>
     </div>
         <div id="tueimgs">
             
@@ -50,7 +50,7 @@
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
     <div class='overlay2'>
-        <p class='text'><a href="/week/Wednesday">Wednesday</a></p>
+        <p><a class='text' href="/week/Wednesday">Wednesday</a></p>
     </div>
         <div id="wedimgs">
             
@@ -58,7 +58,7 @@
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
     <div class='overlay2'>
-        <p class='text'><a href="/week/Thursday">Thursday</a></p>
+        <p><a class='text' href="/week/Thursday">Thursday</a></p>
     </div>
         <div id="thurimgs">
             
@@ -66,7 +66,7 @@
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
     <div class='overlay2'>
-        <p class='text'><a href="/week/Friday">Friday</a></p>
+        <p><a class='text' href="/week/Friday">Friday</a></p>
     </div>
         <div id="friimgs">
             
@@ -74,7 +74,7 @@
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
     <div class='overlay2'>
-        <p class='text'><a href="/week/Saturday">Saturday</a></p>
+        <p><a class='text' href="/week/Saturday">Saturday</a></p>
     </div>
         <div id="satimgs">
             
@@ -82,7 +82,7 @@
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
     <div class='overlay2'>
-        <p class='text'><a href="/week/Sunday">Sunday</a></p>
+        <p><a class='text' href="/week/Sunday">Sunday</a></p>
     </div>
         <div id="sunimgs">
             

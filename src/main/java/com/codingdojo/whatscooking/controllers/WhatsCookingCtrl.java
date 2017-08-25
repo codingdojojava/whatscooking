@@ -102,8 +102,13 @@ public class WhatsCookingCtrl {
 		for(Allergy a : user.getAllergies()) {
 			tempURL += "&allowedAllergy[]=" + a.getSearchName();
 		}
+		for(Diet d : user.getDiets()){
+			tempURL += "&allowedDiet[]=" + d.getSearchName();
+		}
+
 		model.addAttribute("url", tempURL);
 		model.addAttribute("current", user);
+		model.addAttribute("numgrocs", user.getShopping().size());
 		return "home";
 	}
 	
@@ -126,25 +131,32 @@ public class WhatsCookingCtrl {
 		}
 		System.out.println(day);
 		if(day.equals("monday")) {
-			user.getSelected().getMonRecipes().add(recipeServ.getByName(recipe));
+			if(!user.getSelected().getMonRecipes().contains(recipeServ.getByName(recipe)))
+				user.getSelected().getMonRecipes().add(recipeServ.getByName(recipe));
 		}
 		else if(day.equals("tuesday")) {
-			user.getSelected().getTueRecipes().add(recipeServ.getByName(recipe));
+			if(!user.getSelected().getTueRecipes().contains(recipeServ.getByName(recipe)))
+				user.getSelected().getTueRecipes().add(recipeServ.getByName(recipe));
 		}
 		else if(day.equals("wednesday")) {
-			user.getSelected().getWedRecipes().add(recipeServ.getByName(recipe));
+			if(!user.getSelected().getWedRecipes().contains(recipeServ.getByName(recipe)))
+				user.getSelected().getWedRecipes().add(recipeServ.getByName(recipe));
 		}
 		else if(day.equals("thursday")) {
-			user.getSelected().getThurRecipes().add(recipeServ.getByName(recipe));
+			if(!user.getSelected().getThurRecipes().contains(recipeServ.getByName(recipe)))
+				user.getSelected().getThurRecipes().add(recipeServ.getByName(recipe));
 		}
 		else if(day.equals("friday")) {
-			user.getSelected().getFriRecipes().add(recipeServ.getByName(recipe));
+			if(!user.getSelected().getFriRecipes().contains(recipeServ.getByName(recipe)))
+				user.getSelected().getFriRecipes().add(recipeServ.getByName(recipe));
 		}
 		else if(day.equals("saturday")) {
-			user.getSelected().getSatRecipes().add(recipeServ.getByName(recipe));
+			if(!user.getSelected().getSatRecipes().contains(recipeServ.getByName(recipe)))
+				user.getSelected().getSatRecipes().add(recipeServ.getByName(recipe));
 		}
 		else if(day.equals("sunday")) {
-			user.getSelected().getSunRecipes().add(recipeServ.getByName(recipe));
+			if(!user.getSelected().getSunRecipes().contains(recipeServ.getByName(recipe)))
+				user.getSelected().getSunRecipes().add(recipeServ.getByName(recipe));
 		}
 		weekServ.updateWeek(user.getSelected());
 		return "redirect:/home";
@@ -161,8 +173,12 @@ public class WhatsCookingCtrl {
 			recipeServ.addRecipe(tempRecipe);
 			
 		}
-		user.getFavorites().add(recipeServ.getByName(recipe));
-		userServ.updateUser(user);
+		List<Recipe> userFavs = user.getFavorites();
+		Recipe addRecipe = recipeServ.getByName(recipe);
+		if(!userFavs.contains(addRecipe)){
+			user.getFavorites().add(recipeServ.getByName(recipe));
+			userServ.updateUser(user);
+		}
 		model.addAttribute("recipeId", recipe);
 		return "redirect:/home";
 	}
@@ -179,6 +195,7 @@ public class WhatsCookingCtrl {
 	
 	@RequestMapping("recipe/{recipe}")
 	public String showRecipe(Principal principal, @PathVariable("recipe") String recipe, Model model) {
+		User user = whatsCookingServices.findByUsername(principal.getName());
 		if(recipeServ.getByName(recipe) == null)
 		{
 			Recipe tempRecipe = new Recipe();
@@ -189,6 +206,7 @@ public class WhatsCookingCtrl {
 		}
 		model.addAttribute("recipeId", recipe);
 		model.addAttribute("numFavs", recipeServ.getByName(recipe).getFavoritedUsers().size());
+		model.addAttribute("numgrocs", user.getShopping().size());
 		return "showrecipe";
 	}
 	
@@ -223,6 +241,7 @@ public class WhatsCookingCtrl {
 		else{
 			model.addAttribute("recipes", user.getSelected().getSunRecipes());
 		}
+		model.addAttribute("grocnum", user.getShopping().size());
 		return "day";
 	}
 
@@ -257,8 +276,10 @@ public class WhatsCookingCtrl {
 			recipeServ.addRecipe(tempRecipe);
 			
 		}
-		user.getShopping().add(recipeServ.getByName(recipe));
-		userServ.updateUser(user);
+		if(!user.getShopping().contains(recipeServ.getByName(recipe))){
+			user.getShopping().add(recipeServ.getByName(recipe));
+			userServ.updateUser(user);
+		}
 		return "redirect:/home";
 	}
 	
@@ -276,7 +297,7 @@ public class WhatsCookingCtrl {
 		model.addAttribute("plans", user.getWeeks());
 		return "profile";
 	}
-	
+
 	@PostMapping("/home/profile")
 	public String editProfile(@Valid @ModelAttribute("user") User currUser, BindingResult result) {
 		whatsCookingServices.updateProfile(currUser);
@@ -325,31 +346,48 @@ public class WhatsCookingCtrl {
 		return "redirect:/home/profile";
 	}
 	
-	@PostMapping("/home/groceries/{grocery-id}/delete")
-	public String removeGrocery(@PathVariable(value="grocery-id") Long id, Principal principal) {
+	@RequestMapping("/home/groceries/{grocery-id}/delete")
+	public String removeGrocery(@PathVariable(value="grocery-id") Long id, Principal principal, Model model) {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		Recipe recipe = recipeServ.getRById(id);
 		
 		whatsCookingServices.removeRecipeFromGroceries(user, recipe);
-		
-		return "redirect:/home/profile";
+		model.addAttribute("shoppings", user.getShopping());
+		return "showgroc";
 	}
-	@PostMapping("/home/favorites/{favorite-id}/delete")
-	public String removeFavorite(@PathVariable(value="favorite-id") Long id, Principal principal) {
+	@RequestMapping("/home/favorites/{favorite-id}/delete")
+	public String removeFavorite(@PathVariable(value="favorite-id") Long id, Principal principal, Model model) {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		Recipe recipe = recipeServ.getRById(id);
-		
 		whatsCookingServices.removeRecipeFromFavorites(user, recipe);
-		return "redirect:/home/profile";
+		model.addAttribute("favoritess", user.getFavorites());
+		return "showfavs";
+	}
+	
+	@RequestMapping("/addmodalplan/{recipe}")
+	public String modalAddPlan(@PathVariable("recipe") String recipe, Model model, Principal principal){
+		User user = whatsCookingServices.findByUsername(principal.getName());
+		model.addAttribute("current", user);
+		// System.out.println(recipe);
+		return "currweekaddplan";
+	}
+	
+	@RequestMapping("getGrocNum")
+	public String getnumber(Model model, Principal principal){
+		User user = whatsCookingServices.findByUsername(principal.getName());
+		model.addAttribute("numgroc", user.getShopping().size());
+		return "numgroceries";
 	}
 	
 	
-	
-	
-	
-	
+	@RequestMapping("getWeekName")
+	public String getWeek(Model model, Principal principal){
+		User user = whatsCookingServices.findByUsername(principal.getName());
+		model.addAttribute("weekname", user.getSelected().getName());
+		return "weekname";
+	}
 	
 	
 	
