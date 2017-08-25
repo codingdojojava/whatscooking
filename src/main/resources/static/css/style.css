@@ -309,6 +309,7 @@ margin-top:20px;
 	    background-size: cover;
 	    -webkit-font-smoothing: antialiased;
 	    text-rendering: optimizelegibility;
+	    font-family: 'Yanone Kaffeesatz', sans-serif;
 	}
 	
 	a{text-decoration: none;}

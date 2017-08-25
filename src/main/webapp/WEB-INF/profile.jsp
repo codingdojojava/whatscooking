@@ -12,10 +12,11 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style>
 	#list-meal-plans {
-    background: rgba(51, 122, 183 ,0.7);
+    background: rgba(51, 122, 183 ,0.0);
     width: 19%;
     margin-top: -42%;
     margin-left: 1%;
@@ -69,6 +70,7 @@
 	    background-size: cover;
 	    -webkit-font-smoothing: antialiased;
 	    text-rendering: optimizelegibility;
+	    
 	}
 	
 	.change_size {
@@ -331,6 +333,9 @@
                 <form:label path="username">Email: </form:label>
                 <form:input cssClass="form-control" path="username"/>
               </div>
+              
+                <form:hidden cssClass="form-control" path="password"/>
+       
 				<div class="form-group">
 		                                		<div class="row">
 			                                    <label class="col-sm-2 control-label">Diets:</label>
@@ -513,7 +518,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h3 class="modal-title" id="lineModalLabel">Creat a New Plan</h3>
+			<h3 class="modal-title" id="lineModalLabel">Create a New Plan</h3>
 		</div>
 		<div class="modal-body">
 			
