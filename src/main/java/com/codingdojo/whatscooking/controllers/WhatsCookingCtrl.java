@@ -358,7 +358,6 @@ public class WhatsCookingCtrl {
 	}
 	@RequestMapping("/home/favorites/{favorite-id}/delete")
 	public String removeFavorite(@PathVariable(value="favorite-id") String id, Principal principal, Model model) {
-		System.out.println("PLSSSFASDFASDFASFAS");
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		Recipe recipe = recipeServ.getByName(id);

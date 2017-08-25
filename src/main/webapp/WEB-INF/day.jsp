@@ -70,17 +70,17 @@ article{
 }
 </style>
 </head>
-<body>
+<body style="background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(http://res.cloudinary.com/rockafella20/image/upload/c_scale,e_blur:352,w_1860/v1503681852/grovemade-239354_o8grht.jpg) center center no-repeat fixed;">
         <div id="flipkart-navbar" style="margin-top: 20px;">
                 <div class="container">
                     <div class="row row1">
                         <ul class="largenav pull-right">
+                              <li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
+                              <li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
                             <li class="upper-links"><form id="logoutForm" method="POST" action="/logout">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input class="links" id="logout" type="submit" value="Logout" />
             </form></li>
-                              <li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
-                              <li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
                         </ul>
                     </div>
                     <div class="row row2">

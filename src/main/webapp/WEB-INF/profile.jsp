@@ -135,9 +135,10 @@
             <ul class="largenav pull-right">
                 
               	<li style="margin-top:1px;" class="upper-links"><a href="/home" class="links"> <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-home"></span>  Home</a></li>
+              	<li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
 				 <li class="upper-links"><form id="logoutForm" method="POST" action="/logout">
 				        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-				        <input style="background: none;, border: none; text-decoration: none; box-shadow: none; border: none; margin-right: 26px;" class="links" id="logout" type="submit" value="Logout" />
+				        <input style="background: none;, border: none; text-decoration: none; box-shadow: none; border: none;     margin-right: 114px;" class="links" id="logout" type="submit" value="Logout" />
 				    </form></li>
             </ul>
         </div>
