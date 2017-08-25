@@ -1,8 +1,39 @@
+<style>
+    .daycircle{
+		border-radius: 50%;
+	}
+	#week{
+		align-content: center;
+		justify-content: center;
+		display: flex;
+		
+	}
+	.overlay2 {
+		border-radius: 50%;
+	  position: absolute;
+	  top: 0;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	  height: 100%;
+	  width: 100%;
+	  opacity: 0;
+	  transition: .5s ease;
+	  background-color: rgba(0,0,0,0.5);
+	}
+	.onimage:hover .overlay2 {
+	  opacity: 1;
+    }
+    .day{
+        border: none;
+    }
+</style>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <div class="day onimage" style='width:150px; height: 150px;'>
-    <div class='overlay'>
+    <div class='overlay2'>
         <p class='text'><a href="/week/Monday">Monday</a></p>
     </div>
         <div id="monimgs">
@@ -10,7 +41,7 @@
         </div>
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
-    <div class='overlay'>
+    <div class='overlay2'>
         <p class='text'><a href="/week/Tuesday">Tuesday</a></p>
     </div>
         <div id="tueimgs">
@@ -18,7 +49,7 @@
         </div>
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
-    <div class='overlay'>
+    <div class='overlay2'>
         <p class='text'><a href="/week/Wednesday">Wednesday</a></p>
     </div>
         <div id="wedimgs">
@@ -26,7 +57,7 @@
         </div>
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
-    <div class='overlay'>
+    <div class='overlay2'>
         <p class='text'><a href="/week/Thursday">Thursday</a></p>
     </div>
         <div id="thurimgs">
@@ -34,7 +65,7 @@
         </div>
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
-    <div class='overlay'>
+    <div class='overlay2'>
         <p class='text'><a href="/week/Friday">Friday</a></p>
     </div>
         <div id="friimgs">
@@ -42,7 +73,7 @@
         </div>
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
-    <div class='overlay'>
+    <div class='overlay2'>
         <p class='text'><a href="/week/Saturday">Saturday</a></p>
     </div>
         <div id="satimgs">
@@ -50,7 +81,7 @@
         </div>
 </div>
 <div class="day onimage" style='width:150px; height: 150px;'>
-    <div class='overlay'>
+    <div class='overlay2'>
         <p class='text'><a href="/week/Sunday">Sunday</a></p>
     </div>
         <div id="sunimgs">
@@ -63,7 +94,7 @@
         method:'get',
         success: function(res){
             console.log(res.images[0].hostedLargeUrl);
-            $("#monimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+            $("#monimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
         }
         })
         $.ajax({
@@ -71,7 +102,7 @@
         method:'get',
         success: function(res){
             console.log(res.images[0].hostedLargeUrl);
-            $("#tueimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+            $("#tueimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
         }
         })
         $.ajax({
@@ -79,7 +110,7 @@
         method:'get',
         success: function(res){
             console.log(res.images[0].hostedLargeUrl);
-            $("#wedimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+            $("#wedimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
         }
         })
         $.ajax({
@@ -87,7 +118,7 @@
         method:'get',
         success: function(res){
             console.log(res.images[0].hostedLargeUrl);
-            $("#thurimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+            $("#thurimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
         }
         })
         $.ajax({
@@ -95,7 +126,7 @@
         method:'get',
         success: function(res){
             console.log(res.images[0].hostedLargeUrl);
-            $("#friimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+            $("#friimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
         }
         })
         $.ajax({
@@ -103,7 +134,7 @@
         method:'get',
         success: function(res){
             console.log(res.images[0].hostedLargeUrl);
-            $("#satimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+            $("#satimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
         }
         })
         $.ajax({
@@ -111,7 +142,7 @@
         method:'get',
         success: function(res){
             console.log(res.images[0].hostedLargeUrl);
-            $("#sunimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+            $("#sunimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
         }
         })
 </script>
