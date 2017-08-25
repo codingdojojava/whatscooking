@@ -179,7 +179,16 @@ public class WhatsCookingCtrl {
 	
 	@RequestMapping("recipe/{recipe}")
 	public String showRecipe(Principal principal, @PathVariable("recipe") String recipe, Model model) {
+		if(recipeServ.getByName(recipe) == null)
+		{
+			Recipe tempRecipe = new Recipe();
+			tempRecipe.setName(recipe);
+			List<User> tempList= new ArrayList<>();
+			tempRecipe.setFavoritedUsers(tempList);
+			recipeServ.addRecipe(tempRecipe);
+		}
 		model.addAttribute("recipeId", recipe);
+		model.addAttribute("numFavs", recipeServ.getByName(recipe).getFavoritedUsers().size());
 		return "showrecipe";
 	}
 	
@@ -274,8 +283,8 @@ public class WhatsCookingCtrl {
 		return "redirect:/home/profile";
 	}
 	
-	@PostMapping("/home/profile/{p-id}/change-selected")
-	public String changeSelectedPlan(@PathVariable("p-id") Long id, Principal principal, @Valid @ModelAttribute("user") User currUser, BindingResult result) {
+	@RequestMapping("/home/profile/{p-id}/change-selected")
+	public String changeSelectedPlan(Model model, @PathVariable("p-id") Long id, Principal principal) {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		Week temp = weekServ.findWeek(id);
@@ -283,6 +292,17 @@ public class WhatsCookingCtrl {
 		user.setSelected(temp);
 		temp.setUserSelected(user);
 		whatsCookingServices.updateProfile(user);
+<<<<<<< HEAD
+		model.addAttribute("current", user);
+		return "currweek";
+	}
+
+	@RequestMapping("selectedWeek")
+	public String showWeek(Principal principal, Model model){
+		User user = whatsCookingServices.findByUsername(principal.getName());
+		model.addAttribute("current", user);
+		return "currweek";
+=======
 		weekServ.updateWeek(temp);
 		return "redirect:/home/profile";
 	}
@@ -327,6 +347,7 @@ public class WhatsCookingCtrl {
 		
 		whatsCookingServices.removeRecipeFromFavorites(user, recipe);
 		return "redirect:/home/profile";
+>>>>>>> master
 	}
 	
 	

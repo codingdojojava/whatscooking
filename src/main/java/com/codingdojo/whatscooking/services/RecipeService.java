@@ -23,8 +23,12 @@ public class RecipeService {
 	public void addRecipe(Recipe recipe) {
 		recipeRepo.save(recipe);
 	}
+<<<<<<< HEAD
+
+=======
 	
 	public Recipe getRById(Long id) {
 		return recipeRepo.findOne(id);
 	}
+>>>>>>> master
 }

@@ -160,68 +160,14 @@
 		          <div class="row tabcontent" id="plantab">
 		          	<h2>${currentUser.firstname}'s plan</h2>
 					<div id="week">
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Monday">Monday</a></p>
-							</div>
-							 <div id="monimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Tuesday">Tuesday</a></p>
-							</div>
-							 <div id="tueimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Wednesday">Wednesday</a></p>
-							</div>
-							 <div id="wedimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Thursday">Thursday</a></p>
-							</div>
-							 <div id="thurimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Friday">Friday</a></p>
-							</div>
-							 <div id="friimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Saturday">Saturday</a></p>
-							</div>
-							 <div id="satimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Sunday">Sunday</a></p>
-							</div>
-							 <div id="sunimgs">
-							 	
-							 </div>
-						</div>
+						
 					</div>
 		          
 		          <button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal">Create New Plan</button>
 		          <c:forEach items="${plans}" var="plan" >
-		          
-		          <form method="POST" action="/home/profile/${plan.id}/change-selected">
+				  
+				  
+		          <form class='selectWeek' method="POST" action="/home/profile/${plan.id}/change-selected">
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			        <input class="links" type="submit" value="${plan.name}" />
 			    		</form>
@@ -477,6 +423,26 @@
 	
 	
    <script type="text/javascript">
+   $(".selectWeek").submit(function(e){
+	   e.preventDefault();
+	   $.ajax({
+	       url:$(this).attr("action"),
+	       method:'get',
+	       success: function(res){
+			   console.log("WE DONE ITTTTT");
+			   $("#week").html(res);
+	       }
+		})
+   })
+	$.ajax({
+	        url:"/selectedWeek",
+	        method:'get',
+	        success: function(res){
+	            // console.log(res.images[0].hostedLargeUrl);
+				console.log(res);
+	            $("#week").html(res);
+	        }
+   		})
    $(document).ready(function() {
 	   $(".btn-pref .btn").click(function () {
 	       $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
