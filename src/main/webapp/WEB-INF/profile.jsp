@@ -105,7 +105,7 @@
 	}
 	
 	.tabcontent {
-		    margin-left: 980px;
+		    margin-left: 0px;
 		    min-height: 480px;
     			padding: 50px;
     			background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
@@ -145,22 +145,22 @@
 	<div class="row">
 	    <div style="z-index: 1;" class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
 	        <div class="btn-group" role="group">
-	            <button type="button" id="stars" class="btn btn-primary change_size" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+	            <button type="button" id="stars" class="btn btn-primary change_size barbutton" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 	                <div class="hidden-xs">Profile</div>
 	            </button>
 	        </div>
 	        <div class="btn-group" role="group">
-	            <button type="button" id="favorites" class="btn btn-default change_size" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+	            <button type="button" id="favorites" class="btn btn-default change_size barbutton" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
 	                <div class="hidden-xs">Favorites</div>
 	            </button>
 	        </div>
 	        <div class="btn-group" role="group">
-	            <button type="button" id="following" class="btn btn-default change_size" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+	            <button type="button" id="following" class="btn btn-default change_size barbutton" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 	                <div class="hidden-xs">Grocery List</div>
 	            </button>
 	        </div>
 	        <div class="btn-group" role="group">
-	            <button type="button" id="following" class="btn btn-default change_size" href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+	            <button type="button" id="following" class="btn btn-default change_size barbutton" href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
 	                <div class="hidden-xs">Meal Plans</div>
 	            </button>
 	        </div>
@@ -556,7 +556,11 @@
 	
 	
    <script type="text/javascript">
-   
+	
+	$(".barbutton").click(function(e){
+		$(this).addClass("active");
+		$(this).parents().siblings().children().removeClass("active");
+	})
    var randomnumber = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
    var bgpics = ["http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_1525/v1503650953/brooke-lark-93583_ipbwsq.jpg","http://res.cloudinary.com/rockafella20/image/upload/v1503650949/monstruo-estudio-574_tmoiyo.jpg","http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_1585/v1503650951/brenda-godinez-229718_w9tcm1.jpg","http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_1323/v1503650719/brooke-lark-212309_zcgwy9.jpg","http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_3246/v1503556990/aurelien-sinte-328790_qdbrgp.jpg"]
    var rbgimage = "linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("+bgpics[randomnumber]+") center center no-repeat fixed"
@@ -662,7 +666,7 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#groctab").append("<img style='margin-top: 20px;' class='col-md-5' src='"+imgUrl+"'><h3 class='col-md-7'>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/></form><p>Ingredients: </p><div class='col-md-12'><ul id='ingredientList-${loop.index}'></ul></div><div style='margin-bottom: 10px;'><input class='links btn btn-danger' style='margin-left: 50%' type='submit' value='Remove Recipe' /></div>");
+				$("#groctab").append("<img style='margin-top: 20px;' class='col-md-2' src='"+imgUrl+"'><h3 class='col-md-7'>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/></form><p style='margin-top: 170px; margin-left: 20px;'>Ingredients: </p><div class='col-md-12'><ul id='ingredientList-${loop.index}'></ul></div><div style='margin-bottom: 10px;'><input class='links btn btn-danger' style='margin-left: 50%' type='submit' value='Remove Recipe' /></div>");
 	       	
 				var ingred = res.ingredientLines;
 				console.log(ingred.length);
