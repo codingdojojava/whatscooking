@@ -575,7 +575,8 @@
 				   url:"/getWeekName",
 				   method:'get',
 				   success: function(res){
-					   $("weekName").html(res);
+					   console.log(res);
+					   $("#weekName").html(res);
 				   }
 			   })
 	       }
