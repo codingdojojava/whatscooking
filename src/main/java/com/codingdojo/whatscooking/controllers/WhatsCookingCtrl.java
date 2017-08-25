@@ -325,17 +325,18 @@ public class WhatsCookingCtrl {
 	}
 	
 	
-	@PostMapping("/home/addPlan")
-	public String addNewPlan(@Valid @ModelAttribute("plan") Week weekplan, BindingResult result, Principal principal) {
+	@RequestMapping("/home/addPlan")
+	public String addNewPlan(@Valid @ModelAttribute("plan") Week weekplan, BindingResult result, Principal principal, Model model) {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		
 		weekplan.setUser(user);
 		weekServ.addWeek(weekplan);
-		
 		user.getWeeks().add(weekplan);
+		user.setSelected(weekplan);
 		whatsCookingServices.updateProfile(user);
-		return "redirect:/home/profile";
+		model.addAttribute("current", user);
+		return "currweek";
 	}
 	
 //	removes
