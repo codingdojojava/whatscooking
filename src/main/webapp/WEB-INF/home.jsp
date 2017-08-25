@@ -97,9 +97,9 @@
 	        <div class="row row2">
 	            <div class="col-sm-3">
 	                <h2 style="margin:0px;"><span class="smallnav menu" onclick="openNav()">☰ What's Cooking?</span></h2>
-	                <h1 style="margin:0px;"><span class="largenav" style="font-size: 35px;">What's Cooking</span></h1>
+	                <h1 style="margin:0px;"><span class="largenav" style="font-size: 35px;"><a href="/home"><img style="position: absolute; top: -80px; left: 110px; width: 64%;" src="http://res.cloudinary.com/rockafella20/image/upload/v1503694198/4ec511a2-b631-47ba-9e51-cf8a09ba7792_rzbxyl.png" ></a></span></h1>
 	            </div>
-	            <div class="flipkart-navbar-search smallsearch col-sm-7 col-xs-11" style="border:1px solid black;">
+	            <div class="flipkart-navbar-search smallsearch col-sm-7 col-xs-11" style="border:1px solid black;margin-top: -12px;">
 	                <div class="row">
 	                <form id=search>
 	                    <input id="keyword" class="flipkart-navbar-input col-xs-11" type="text" placeholder="Search for Recipes" name="keyword">
