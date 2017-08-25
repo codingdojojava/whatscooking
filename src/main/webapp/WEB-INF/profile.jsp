@@ -163,13 +163,20 @@
 						
 					</div>
 		          
+		          <button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal">Create New Plan</button>
 		          <c:forEach items="${plans}" var="plan" >
 				  
 				  
 		          <form class='selectWeek' method="POST" action="/home/profile/${plan.id}/change-selected">
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			        <input class="links" id="logout" type="submit" value="${plan.name}" />
+			        <input class="links" type="submit" value="${plan.name}" />
 			    		</form>
+			    		
+		          <form method="POST" action="/home/plans/${plan.id}/delete">
+			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			        <input class="links" type="submit" value="Remove Plan" />
+			    		</form>
+			    		
 		          </c:forEach>
 		          
 		        		</div>
@@ -372,6 +379,48 @@
 </div>
 	
 	
+<div class="modal fade" id="plansquarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			<h3 class="modal-title" id="lineModalLabel">Edit Profile</h3>
+		</div>
+		<div class="modal-body">
+			
+            <!-- content goes here -->
+            <form:form method="POST" action="/home/addPlan" modelAttribute="plan">
+			  <div class="form-group">
+                <form:label path="name">Plan Name: </form:label>
+                <form:input cssClass="form-control" path="name"/>
+              </div>            
+              <button type="submit" class="btn btn-default">Add Plan</button>
+            </form:form>
+			                  				
+
+
+
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
+				</div>
+				<div class="btn-group btn-delete hidden" role="group">
+					<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
+				</div>
+				<div class="btn-group hidden" role="group">
+					<button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+	
+	
+	
+	
 	
    <script type="text/javascript">
    $(".selectWeek").submit(function(e){
@@ -411,8 +460,9 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#favtab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><p>"+res.cookTime+"</p>");
-	       
+				$("#favtab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form method='POST' action='/home/favorites/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Favorite' /></form><p>"+res.cookTime+"</p>");
+				
+				
 // 			$("#slide-content").append("<div id='slide-content-${loop.index}'><h2>"+ res.name +"</h2><p>Source: <a href='#'>"+res.source.sourceDisplayName+"</a></p><p>Rating: "+res.rating+"</p><p>Prep Time: "+res.prepTime+"</p><p>Cook Time: "+res.cookTime+"</p><p>Total Time: "+res.totalTime+"</p></div>");
 //				$(".hide-bullets").append("<li class='col-sm-2'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+res.images[0]["hostedLargeUrl"]+"'></a></li>"); 
 				
@@ -429,8 +479,8 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#groctab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><p>Ingredients: </p><ul id='ingredientList-${loop.index}'></ul>");
-	       
+				$("#groctab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Recipe' /></form><p>Ingredients: </p><ul id='ingredientList-${loop.index}'></ul>");
+	       	
 				var ingred = res.ingredientLines;
 				console.log(ingred.length);
 				
@@ -438,6 +488,7 @@
 					$("#ingredientList-${loop.index}").append("<li>"+ingred[i]+"</li>");
 				}
 
+				
 				
 				
 // 			$("#slide-content").append("<div id='slide-content-${loop.index}'><h2>"+ res.name +"</h2><p>Source: <a href='#'>"+res.source.sourceDisplayName+"</a></p><p>Rating: "+res.rating+"</p><p>Prep Time: "+res.prepTime+"</p><p>Cook Time: "+res.cookTime+"</p><p>Total Time: "+res.totalTime+"</p></div>");

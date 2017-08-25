@@ -1,8 +1,12 @@
 package com.codingdojo.whatscooking.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.codingdojo.whatscooking.models.Recipe;
 import com.codingdojo.whatscooking.models.User;
 import com.codingdojo.whatscooking.repositories.RoleRepo;
 import com.codingdojo.whatscooking.repositories.UserRepo;
@@ -42,6 +46,30 @@ public class WhatsCookingServices {
     
     public void updateProfile(User user) {
     		userRepository.save(user);
+    }
+    
+    public void removeRecipeFromGroceries(User user, Recipe recipe) {
+		List<Recipe> groceries = user.getShopping();
+		List<Recipe> toRemove = new ArrayList<Recipe>();
+		for(Recipe grocery: groceries){
+		    if(grocery.getId() == (recipe.getId())){
+		        toRemove.add(grocery);
+		    }
+		}
+		groceries.removeAll(toRemove);
+		userRepository.save(user);
+    }
+    
+    public void removeRecipeFromFavorites(User user, Recipe recipe) {
+		List<Recipe> favorites = user.getFavorites();
+		List<Recipe> toRemove = new ArrayList<Recipe>();
+		for(Recipe favorite: favorites){
+		    if(favorite.getId() == (recipe.getId())){
+		        toRemove.add(favorite);
+		    }
+		}
+		favorites.removeAll(toRemove);
+		userRepository.save(user);
     }
     
 }

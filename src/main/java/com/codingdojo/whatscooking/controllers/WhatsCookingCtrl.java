@@ -263,7 +263,7 @@ public class WhatsCookingCtrl {
 	}
 	
 	@RequestMapping("/home/profile")
-	public String showProfile(Principal principal, Model model) {
+	public String showProfile(Principal principal, Model model, @Valid @ModelAttribute("plan") Week weekplan) {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		model.addAttribute("currentUser", user);
@@ -288,12 +288,11 @@ public class WhatsCookingCtrl {
 		String username = principal.getName();
 		User user = whatsCookingServices.findByUsername(username);
 		Week temp = weekServ.findWeek(id);
+		user.getSelected().setUserSelected(null);
+		user.setSelected(temp);
 		temp.setUserSelected(user);
-		List<Week> tempWeeks = new ArrayList<>();
-		user.setWeeks(tempWeeks);
-		user.getWeeks().add(temp);
-		user.setSelected(user.getWeeks().get(user.getWeeks().size()-1));
 		whatsCookingServices.updateProfile(user);
+<<<<<<< HEAD
 		model.addAttribute("current", user);
 		return "currweek";
 	}
@@ -303,6 +302,61 @@ public class WhatsCookingCtrl {
 		User user = whatsCookingServices.findByUsername(principal.getName());
 		model.addAttribute("current", user);
 		return "currweek";
+=======
+		weekServ.updateWeek(temp);
+		return "redirect:/home/profile";
 	}
+	
+	
+	@PostMapping("/home/addPlan")
+	public String addNewPlan(@Valid @ModelAttribute("plan") Week weekplan, BindingResult result, Principal principal) {
+		String username = principal.getName();
+		User user = whatsCookingServices.findByUsername(username);
+		
+		weekplan.setUser(user);
+		weekServ.addWeek(weekplan);
+		
+		user.getWeeks().add(weekplan);
+		whatsCookingServices.updateProfile(user);
+		return "redirect:/home/profile";
+	}
+	
+//	removes
+	
+	@PostMapping("/home/plans/{plan-id}/delete")
+	public String removePlan(@PathVariable(value="plan-id") Long id) {
+		weekServ.deleteWeek(id);
+		return "redirect:/home/profile";
+	}
+	
+	@PostMapping("/home/groceries/{grocery-id}/delete")
+	public String removeGrocery(@PathVariable(value="grocery-id") Long id, Principal principal) {
+		String username = principal.getName();
+		User user = whatsCookingServices.findByUsername(username);
+		Recipe recipe = recipeServ.getRById(id);
+		
+		whatsCookingServices.removeRecipeFromGroceries(user, recipe);
+		
+		return "redirect:/home/profile";
+	}
+	@PostMapping("/home/favorites/{favorite-id}/delete")
+	public String removeFavorite(@PathVariable(value="favorite-id") Long id, Principal principal) {
+		String username = principal.getName();
+		User user = whatsCookingServices.findByUsername(username);
+		Recipe recipe = recipeServ.getRById(id);
+		
+		whatsCookingServices.removeRecipeFromFavorites(user, recipe);
+		return "redirect:/home/profile";
+>>>>>>> master
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
