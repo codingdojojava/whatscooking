@@ -604,10 +604,11 @@
 	   });
 	   
 
-	$(document).on('submit', '.rmFav', function(e){
+	$(document).on('click', '.rmFav', function(e){
+		var _this=this;
 		e.preventDefault();
 		$.ajax({
-	       url:$(this).attr('action'),
+	       url:$(_this).attr('href'),
 	       method:'get',
 	       success: function(res){
 				$("#favtab").html(res);
@@ -639,12 +640,12 @@
 				
 				<c:choose>
 				<c:when test="${loop.index eq 0 }" >
-				$("#favthumblist").append("<li class='col-sm-3'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+imgUrl+"'></a><p><a href='/recipe/"+res.id+"'>"+res.name+"</a></p></li>");
+				$("#favthumblist").append("<li class='col-sm-3'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+imgUrl+"'></a><p style='text-align:center;'><a class='rmFav' style='display:inline-block;' href='/home/favorites/"+res.id+"/delete'><span class='glyphicon glyphicon-star' style='color:rgb(204,204,0); font-size: 20px;'></span></a> <div style='display: inline-block; width: 80px;'><a href='/recipe/"+res.id+"'>"+res.name+"</a></div></p></li>");
 				$("#favlargelist").append("<div class='active item' data-slide-number='${loop.index}'><img src='"+bigimgUrl+"'></div>");
 	 			$("#slide-content").append("<div id='slide-content-${loop.index}'><a href='/recipe/"+res.id+"'>"+res.name+"</a></div>");
 				</c:when>
 				<c:otherwise>
-				$("#favthumblist").append("<li class='col-sm-3'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+imgUrl+"'></a><p><a href='/recipe/"+res.id+"'>"+res.name+"</a></p></li>");
+				$("#favthumblist").append("<li class='col-sm-3'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+imgUrl+"'></a><p style='text-align: center;'><a class='rmFav' style='display: inline-block;' href='/home/favorites/"+res.id+"/delete'><span class='glyphicon glyphicon-star' style='color:rgb(204,204,0); font-size: 20px;'></span></a> <div style='display:inline-block; width: 80px;'><a href='/recipe/"+res.id+"'>"+res.name+"</a></div></p></li>");
 				$("#favlargelist").append("<div class='item' data-slide-number='${loop.index}'><img src='"+bigimgUrl+"'></div>");
 	 			$("#slide-content").append("<div id='slide-content-${loop.index}'><a href='#'>"+res.name+"</a></div>");
 				</c:otherwise>
@@ -667,7 +668,7 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#groctab").append("<img style='margin-top: 20px;' class='col-md-2' src='"+imgUrl+"'><h3 class='col-md-7'>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/></form><p style='margin-top: 170px; margin-left: 20px;'>Ingredients: </p><div class='col-md-12'><ul id='ingredientList-${loop.index}'></ul></div><div style='margin-bottom: 10px;'><input class='links btn btn-danger' style='margin-left: 50%' type='submit' value='Remove Recipe' /></div>");
+				$("#groctab").append("<img style='margin-top: 20px;' class='col-md-2' src='"+imgUrl+"'><h3 class='col-md-7'>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><p style='margin-top: 170px; margin-left: 20px;'>Ingredients: </p><div class='col-md-12'><ul id='ingredientList-${loop.index}'></ul></div><div style='margin-bottom: 10px;'><input class='links btn btn-danger' style='margin-left: 50%' type='submit' value='Remove Recipe' /></div></form>");
 	       	
 				var ingred = res.ingredientLines;
 				console.log(ingred.length);

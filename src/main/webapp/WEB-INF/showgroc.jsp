@@ -1,17 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+
     <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-</head>
+<style>
+	.tabcontent {
+		    margin-left: 0px;
+		    min-height: 480px;
+    			padding: 50px;
+    			background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
+    			border-radius: 1%;
+    			box-shadow:0 0 25px #fff;
+	}
+</style>
 <body>
-    <div id='temptab'></div>
+    <div id='temptab' class="row tabcontent"></div>
     <script>
         <c:forEach items="${shoppings}" var="favorite" varStatus="loop">
 	   $.ajax({
@@ -21,7 +24,7 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#temptab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Recipe' /></form><p>Ingredients: </p><ul id='ingredientList-${loop.index}'></ul>");
+				$("#temptab").append("<img style='margin-top: 20px;' class='col-md-2' src='"+imgUrl+"'><h3 class='col-md-7'>"+res.name+"</h3><p>Ingredients: </p><ul id='ingredientList-${loop.index}'></ul><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links btn btn-danger' style='margin-left:50%;' type='submit' value='Remove Recipe' /></form>");
 	       	
 				var ingred = res.ingredientLines;
 				console.log(ingred.length);
@@ -42,4 +45,3 @@
 	</c:forEach>
     </script>
 </body>
-</html>
