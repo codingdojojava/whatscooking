@@ -246,6 +246,10 @@
 		.red{
 			color:red;
 		}
+		#logout{
+			border: none;
+			background: none;
+		}
     </style>
     <script>
         $(document).ready(function() {
@@ -285,12 +289,8 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input class="links" id="logout" type="submit" value="Logout" />
     </form></li>
-	              	<li class="upper-links"><a href="/profile" class="links">My Profile</a></li>
-	                <li class="upper-links">
-	                    <a class="links" href="#">
-	                        <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-heart"></span>
-	                    </a>
-	                </li>
+	              	<li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
+					<li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
 	            </ul>
 	        </div>
 	        <div class="row row2">
@@ -319,7 +319,7 @@
 	                <a class="cart-button" style="margin-top: 4px;">
 	                		<span style="font-size: 13px;" class="glyphicon glyphicon-shopping-cart"></span>
 	                     Grocery List
-	                    <span class="item-number ">0</span>
+	                    <span class="item-number " id='grocnum'>${numgrocs}</span>
 	                </a>
 	            </div>
 	        </div>
@@ -445,6 +445,14 @@
 					console.log("fffff");
 					$("#addgroc").html("<span id='shopIcon' class='glyphicon glyphicon-thumbs-up' style='color: #46D8D2;'></span> Add to groceries")
 					$("#addgroc").attr('style', 'text-decoration:none;');
+					$.ajax({
+						url:"/getGrocNum",
+						method:"get",
+						success:function(res){
+							console.log(res);
+							$("#grocnum").html(res);
+						}
+					})
 				}
 			})
 		})

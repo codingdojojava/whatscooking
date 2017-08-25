@@ -188,7 +188,7 @@
 					</div>
 					<div class="tab-pane fade in bgtab" id="tab4">
 						<div class="row tabcontent" id="plantab" style="width: 100%; margin-left: 0;min-height: 30px;height: 328px; margin-top: 4%;">
-						<h2 style="margin-left: 30px; font-size: 21px;">You are viewing: <span id="weekName">${currentUser.selected.name}</span></h2>
+						<h2 style="margin-left: 30px; font-size: 21px;">You are viewing: ${currentUser.selected.name}</h2>
 						<div id="week" style="margin-left: 30%; margin-top: 3%;">
 							
 						</div>
@@ -439,7 +439,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h3 class="modal-title" id="lineModalLabel">Create a New Plan</h3>
+			<h3 class="modal-title" id="lineModalLabel">Creat a New Plan</h3>
 		</div>
 		<div class="modal-body">
 			
@@ -486,13 +486,6 @@
 	       success: function(res){
 			   console.log("WE DONE ITTTTT");
 			   $("#week").html(res);
-			   $.ajax({
-				   url:"/getWeekName",
-				   method:'get',
-				   success: function(res){
-					   $("weekName").html(res);
-				   }
-			   })
 	       }
 		})
    })

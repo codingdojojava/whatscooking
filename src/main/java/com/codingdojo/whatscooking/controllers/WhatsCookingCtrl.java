@@ -108,6 +108,7 @@ public class WhatsCookingCtrl {
 
 		model.addAttribute("url", tempURL);
 		model.addAttribute("current", user);
+		model.addAttribute("numgrocs", user.getShopping().size());
 		return "home";
 	}
 	
@@ -194,6 +195,7 @@ public class WhatsCookingCtrl {
 	
 	@RequestMapping("recipe/{recipe}")
 	public String showRecipe(Principal principal, @PathVariable("recipe") String recipe, Model model) {
+		User user = whatsCookingServices.findByUsername(principal.getName());
 		if(recipeServ.getByName(recipe) == null)
 		{
 			Recipe tempRecipe = new Recipe();
@@ -204,6 +206,7 @@ public class WhatsCookingCtrl {
 		}
 		model.addAttribute("recipeId", recipe);
 		model.addAttribute("numFavs", recipeServ.getByName(recipe).getFavoritedUsers().size());
+		model.addAttribute("numgrocs", user.getShopping().size());
 		return "showrecipe";
 	}
 	
@@ -238,6 +241,7 @@ public class WhatsCookingCtrl {
 		else{
 			model.addAttribute("recipes", user.getSelected().getSunRecipes());
 		}
+		model.addAttribute("grocnum", user.getShopping().size());
 		return "day";
 	}
 
@@ -370,9 +374,20 @@ public class WhatsCookingCtrl {
 		return "currweekaddplan";
 	}
 	
+	@RequestMapping("getGrocNum")
+	public String getnumber(Model model, Principal principal){
+		User user = whatsCookingServices.findByUsername(principal.getName());
+		model.addAttribute("numgroc", user.getShopping().size());
+		return "numgroceries";
+	}
 	
 	
-	
+	@RequestMapping("getWeekName")
+	public String getWeek(Model model, Principal principal){
+		User user = whatsCookingServices.findByUsername(principal.getName());
+		model.addAttribute("weekname", user.getSelected().getName());
+		return "weekname";
+	}
 	
 	
 	

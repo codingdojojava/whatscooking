@@ -42,6 +42,7 @@
 		display: flex;
 		
 	}
+	
 	.overlay2 {
 		border-radius: 50%;
 	  position: absolute;
@@ -60,12 +61,13 @@
 	}
 	#suggestions{
 		/* margin: 0 auto; */
-		width: 95%;
-		margin-left: 5%;
+		background: rgba(255, 255, 255, 0.5);
+		width: 100%;
+		padding-left: 4%;
 	}
-	h2{
+	/* h2{
 		background-color: rgba(255,255,255,0.5);
-	}
+	} */
 	body{
 		background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(http://res.cloudinary.com/rockafella20/image/upload/c_scale,e_blur:1389,w_2245/v1503470664/brooke-lark-158017_bh7gw4.jpg) center center no-repeat fixed;
 	}
@@ -88,11 +90,7 @@
         <input class="links" id="logout" type="submit" value="Logout" />
     </form></li>
 	              	<li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
-	                <li class="upper-links">
-	                    <a class="links" href="/home/favorites">
-	                        <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-heart"></span>
-	                    </a>
-	                </li>
+					<li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
 	            </ul>
 	        </div>
 	        <div class="row row2">
@@ -121,7 +119,7 @@
 	                <a class="cart-button" style="margin-top: 4px;">
 	                		<span style="font-size: 13px;" class="glyphicon glyphicon-shopping-cart"></span>
 	                     Grocery List
-	                    <span class="item-number ">0</span>
+	                    <span class="item-number ">${numgrocs}</span>
 	                </a>
 	            </div>
 	        </div>
@@ -279,13 +277,13 @@
 				console.log(res);
 				var tempStr = "<h2 style='padding-left: 5%; width: 87%'>Made for you:</h2><div id='container'></div>";
 				for(var i = 0; i < res.matches.length; i++){
-					tempStr+="<div class='onimage item'>";
+					tempStr+="<div style='margin:5px' class='onimage item'>";
 					tempStr+="<img class='image' src='" + res.matches[i].imageUrlsBySize[90]+ "' alt='match'>";
 					tempStr+="<div class='overlay'>";
 					tempStr+="<a class='text' style='top:10%; left: 90%;' data-toggle='modal' href='#myModal"+res.matches[i].id+"'>";
 					tempStr+="<div><span class='glyphicon glyphicon-plus'></span></div>";
 					tempStr+="</a>";
-					tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+					// tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
 					
 					tempStr+="<a id='favorite"+res.matches[i].id+"' info='"+res.matches[i].id+"'class='text favorite' style='top:27%; left: 90%;' href='/favorite/"+res.matches[i].id+"'>";
 					tempStr+="<div><span class='star glyphicon glyphicon-star-empty'></span></div>";
@@ -293,6 +291,8 @@
 					tempStr+="<a class='text foodname' style='top:80%' href='/recipe/"+res.matches[i].id+"'>"+res.matches[i].recipeName+"</a>";
 					tempStr+="</div>";
 					tempStr+="</div>";
+					tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+
 				}
 				$("#suggestions").html(tempStr);
 				var maxPages = res.totalMatchCount/20;
@@ -322,13 +322,13 @@
 		        	            		var results = "<h2 style='padding-left: 5%; width: 87%'>Made for you:</h2><div id='container'></div>";
 		        	            		for(var i = 0; i < matched.length; i++) {
 		        	            			recipeLink = matched[i].id;
-		        	            			results+="<div class='onimage'>";
+		        	            			results+="<div style='margin:5px' class='onimage'>";
 											results+="<img class='image' src='" + response.matches[i].imageUrlsBySize[90]+ "' alt='match'>";
 											results+="<div class='overlay'>";
 											results+="<a class='text' style='top:10%; left: 90%;' data-toggle='modal' href='#myModal"+response.matches[i].id+"'>";
 											results+="<div><span class='glyphicon glyphicon-plus'></span></div>";
 											results+="</a>";
-											results+="<div class='modal fade product_view' id='myModal"+response.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+response.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/monday'>Monday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+response.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+											// results+="<div class='modal fade product_view' id='myModal"+response.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+response.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/monday'>Monday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+response.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
 											
 											results+="<a id='favorite"+response.matches[i].id+"' info='"+response.matches[i].id+"'class='text favorite' style='top:27%; left: 90%;' href='/favorite/"+response.matches[i].id+"'>";
 											results+="<div><span class='star glyphicon glyphicon-star-empty'></span></div>";
@@ -336,6 +336,8 @@
 											results+="<a class='text foodname' style='top:80%' href='/recipe/"+response.matches[i].id+"'>"+response.matches[i].recipeName+"</a>";
 											results+="</div>";
 											results+="</div>";
+											results+="<div class='modal fade product_view' id='myModal"+response.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+response.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/monday'>Monday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+response.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+
 		        	            		}
 		        	             	$("#suggestions").html(results); // some ajax content loading...
 	        	       			}
@@ -409,13 +411,13 @@
 						if($("#keyword").val() != ""){
 							var tempStr = '<h2 style="padding-left: 5%; width: 87%">'+$("#keyword").val()+':</h2>';
 							for(var i = 0; i < res.matches.length; i++){
-								tempStr+="<div class='onimage item'>";
+								tempStr+="<div style='margin:5px' class='onimage item'>";
 								tempStr+="<img class='image' src='" + res.matches[i].imageUrlsBySize[90]+ "' alt='match'>";
 								tempStr+="<div class='overlay'>";
 								tempStr+="<a class='text' style='top:10%; left: 90%;' data-toggle='modal' href='#myModal"+res.matches[i].id+"'>";
 								tempStr+="<div><span class='glyphicon glyphicon-plus'></span></div>";
 								tempStr+="</a>";
-								tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+								// tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
 								
 								tempStr+="<a id='favorite"+res.matches[i].id+"' info='"+res.matches[i].id+"'class='text favorite' style='top:27%; left: 90%;' href='/favorite/"+res.matches[i].id+"'>";
 								tempStr+="<div><span class='star glyphicon glyphicon-star-empty'></span></div>";
@@ -423,6 +425,8 @@
 								tempStr+="<a class='text foodname' style='top:80%' href='/recipe/"+res.matches[i].id+"'>"+res.matches[i].recipeName+"</a>";
 								tempStr+="</div>";
 								tempStr+="</div>";
+								tempStr+="<div class='modal fade product_view' id='myModal"+res.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+res.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/tuesday'>Tuesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/wednesday'>Wednesday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+res.matches[i].id+"' href='/addtoplan/"+res.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+res.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+
 							}
 						}
 						$("#suggestions").html(tempStr);
@@ -454,13 +458,13 @@
 		        	            		var results = '<h2 style="padding-left: 5%; width: 87%">'+$("#keyword").val()+':</h2>';
 		        	            		for(var i = 0; i < matched.length; i++) {
 		        	            			recipeLink = matched[i].id;
-		        	            			results+="<div class='onimage'>";
+		        	            			results+="<div style='margin:5px' class='onimage'>";
 											results+="<img class='image' src='" + response.matches[i].imageUrlsBySize[90]+ "' alt='match'>";
 											results+="<div class='overlay'>";
 											results+="<a class='text' style='top:10%; left: 90%;' data-toggle='modal' href='#myModal"+response.matches[i].id+"'>";
 											results+="<div><span class='glyphicon glyphicon-plus'></span></div>";
 											results+="</a>";
-											results+="<div class='modal fade product_view' id='myModal"+response.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+response.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/tuesday'>Tuesday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/wednesday'>Wednesday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+response.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+											// results+="<div class='modal fade product_view' id='myModal"+response.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+response.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/tuesday'>Tuesday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/wednesday'>Wednesday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+response.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
 											
 											results+="<a id='favorite"+response.matches[i].id+"' info='"+response.matches[i].id+"'class='text favorite' style='top:27%; left: 90%;' href='/favorite/"+response.matches[i].id+"'>";
 											results+="<div><span class='star glyphicon glyphicon-star-empty'></span></div>";
@@ -468,6 +472,8 @@
 											results+="<a class='text foodname' style='top:80%' href='/recipe/"+response.matches[i].id+"'>"+response.matches[i].recipeName+"</a>";
 											results+="</div>";
 											results+="</div>";
+											results+="<div class='modal fade product_view' id='myModal"+response.matches[i].id+"'> <div class='modal-dialog'> <div class='modal-content'> <div class='modal-header'> <a href='#' data-dismiss='modal' class='class pull-right'><span class='glyphicon glyphicon-remove'></span></a> <h3 class='modal-title'>Pick a day</h3> </div><div class='modal-body'> <div class='row'> <img class='col-md-6' src='"+response.matches[i].imageUrlsBySize[90]+"'><div> <div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/monday'>Monday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/tuesday'>Tuesday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/wednesday'>Wednesday</a></div><div><a info='"+response.matches[i].id+"' class='addtoplanlink' href='/addtoplan/"+response.matches[i].id+"/thursday'>Thursday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/friday'>Friday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/saturday'>Saturday</a></div><div><a class='addtoplanlink' info='"+response.matches[i].id+"' href='/addtoplan/"+response.matches[i].id+"/sunday'>Sunday</a></div></div></div></div><div class='modal-footer'> <button id='closeadd' info='"+response.matches[i].id+"' type='button' class='btn btn-primary'>Cancel</button> </div></div></div></div>";
+
 		        	            		}
 		        	             	$("#suggestions").html(results); // some ajax content loading...
 	        	       			}

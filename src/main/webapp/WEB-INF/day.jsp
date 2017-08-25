@@ -39,6 +39,10 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 p{
     color:black;
 }
+#logout{
+		border: none;
+		background: none;
+	}
 .blur{
     z-index:9999;
     -webkit-filter: blur(0px);
@@ -47,18 +51,21 @@ p{
     -ms-filter: blur(13px);
     filter: blur(0px);
 }
-body:before {
+/* body:before {
     content: "";
     position: absolute;
     background: url(http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_957/v1503470664/brooke-lark-158017_bh7gw4.jpg);
     background-size: cover;
-    z-index: -1; /* Keep the background behind the content */
-    height: 20%; width: 20%; /* Using Glen Maddern's trick /via @mente */
+    z-index: -1; 
+    height: 20%; width: 20%; 
 
-    /* don't forget to use the prefixes you need */
     transform: scale(5);
     transform-origin: top left;
     filter: blur(2px);
+} */
+article{
+    background: rgba(255,255,255,.5);
+    padding-top: 10px;
 }
 </style>
 </head>
@@ -72,14 +79,11 @@ body:before {
                 <input class="links" id="logout" type="submit" value="Logout" />
             </form></li>
                               <li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
-                            <li class="upper-links">
-                                <a class="links" href="#">
-                                    <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-heart"></span>
-                                </a>
-                            </li>
+                              <li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
                         </ul>
                     </div>
                     <div class="row row2">
+                            
                         <div class="col-sm-3">
                             <h2 style="margin:0px;"><span class="smallnav menu" onclick="openNav()">☰ What's Cooking?</span></h2>
                             <h1 style="margin:0px;"><span class="largenav" style="font-size: 35px;">What's Cooking</span></h1>
@@ -105,7 +109,7 @@ body:before {
                             <a class="cart-button" style="margin-top: 4px;">
                                     <span style="font-size: 13px;" class="glyphicon glyphicon-shopping-cart"></span>
                                  Grocery List
-                                <span class="item-number ">0</span>
+                                <span class="item-number" id='grocnum'>${grocnum}</span>
                             </a>
                         </div>
                     </div>
@@ -129,14 +133,50 @@ body:before {
 
     </c:forEach>
     <script>
+        $(document).on('click', '.favorite', function(e){
+            var _this=this;
+			e.preventDefault();
+			$.ajax({
+				url:$(_this).attr("href"),
+				method:"get",
+				success:function(res){
+					console.log("#fav"+$(_this).attr('info'));
+					$("#fav"+$(_this).attr('info')).html("<span class='glyphicon glyphicon-star' style='color:#46D8D2'></span> <span>Favorite</span>")
+					$("#fav"+$(_this).attr('info')).attr('style', 'text-decoration:none;');
+				}
+			})
+		})
+
+        $(document).on('click', '.groceries', function(e){
+            var _this=this;
+			e.preventDefault();
+			$.ajax({
+				url:$(this).attr("href"),
+				method:"get",
+				success:function(res){
+					console.log("fffff");
+					$("#addgroc"+$(_this).attr('info')).html("<span id='shopIcon' class='glyphicon glyphicon-thumbs-up' style='color: #46D8D2;'></span> Add to groceries")
+					$("#addgroc"+$(_this).attr('info')).attr('style', 'text-decoration:none;');
+					$.ajax({
+						url:"/getGrocNum",
+						method:"get",
+						success:function(res){
+							console.log(res);
+							$("#grocnum").html(res);
+						}
+					})
+				}
+			})
+		})
+
         <c:forEach var="recipe" items="${recipes}">
         $.ajax({
 	        url:"http://api.yummly.com/v1/api/recipe/${recipe.name}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
 	        method:'get',
 	        success: function(res){
                 console.log(res);
-                var htmlStr = "<article class='blur search-result row'><div class='col-xs-12 col-sm-12 col-md-3'><a href='"+ res.attribution.url +"' title='Lorem ipsum' class='thumbnail'><img src='"+ res.images[0].hostedLargeUrl +"' alt='Lorem ipsum' /></a></div><div class='col-xs-12 col-sm-12 col-md-2'><ul class='meta-search'><li><a href='/favorite/"+ res.id+"'><i class='glyphicon glyphicon-star-empty'></i> <span>Favorite</span></a></li>";
-                htmlStr+="<li><a href='/groceries/add/"+res.id+"'><i class='glyphicon glyphicon-shopping-cart'></i> <span>Add to groceries</span></a></li><li><a href='/${day}/remove/"+res.id+"'><i class='glyphicon glyphicon-trash'></i> <span>Remove</span></a></li></ul></div>"
+                var htmlStr = "<article class='blur search-result row'><div class='col-xs-12 col-sm-12 col-md-3'><a href='"+ res.attribution.url +"' title='Lorem ipsum' class='thumbnail'><img src='"+ res.images[0].hostedLargeUrl +"' alt='Lorem ipsum' /></a></div><div class='col-xs-12 col-sm-12 col-md-2'><ul class='meta-search'><li><a info='"+res.id+"' id='fav"+res.id+"' class='favorite' href='/favorite/"+ res.id+"'><i class='glyphicon glyphicon-star-empty'></i> <span>Favorite</span></a></li>";
+                htmlStr+="<li><a info='"+res.id+"' id='addgroc"+res.id+"' class='groceries' href='/groceries/add/"+res.id+"'><i class='glyphicon glyphicon-shopping-cart'></i> <span>Add to groceries</span></a></li><li><a href='/${day}/remove/"+res.id+"'><i class='glyphicon glyphicon-trash'></i> <span>Remove</span></a></li></ul></div>"
                 htmlStr+= "<div class='col-xs-12 col-sm-12 col-md-7 excerpet'><h3><a href='"+res.attribution.url+"' title=''>"+res.name+"</a></h3><p>Cooking time: "+res.totalTime+"</p><p>Calories: "+res.nutritionEstimates[0].value + res.nutritionEstimates[0].unit.abbreviation+"</p><p>Rating: " + res.rating + "</p></div>";
                 htmlStr+="<span class='clearfix borda'></span></article>";
                 $("#allRecipes").append(htmlStr);
