@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>What's Cooking?</title>
+
 </head>
 <body>
 
@@ -326,33 +327,30 @@
 	</div>
 	</div>
 	
-	<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-8">
-					<div id="paginate_top"></div>
-				</div>
-			</div>
-	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
 
-				<div id="loader"></div>						
-
-			<div id="results"></div>
+	<div class="row" style="margin-left: 9%;">
+		<div class="col-md-4"></div>
+		<div class="col-md-5">
+			<div id="paginate_top"></div>
 		</div>
-		<div class="col-md-2"></div>
+		<div class="col-md-3"></div>
 	</div>
-			<div class="row">
-				<div class="col-md-4"></div>
-				<div class="col-md-5">
-					<div id="paginate_bot"></div>
-				</div>
-				<div class="col-md-3"></div>
-			</div>
+	<div class="row">
+
+			<div id="results" style="padding-left: 14%;padding-right: 10%;"></div>
+
+	</div>
 	
 	
+	<div class="row" style="margin-left: 9%;">
+		<div class="col-md-4"></div>
+		<div class="col-md-5">
+			<div id="paginate_bot"></div>
+		</div>
+		<div class="col-md-3"></div>
 	</div>
+	
+
 	
 	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
@@ -422,7 +420,7 @@
 	            		var iresults = "";
 	            		for(var j = 0; j < imatched.length; j++) {
 	            			var irecipeLink = imatched[j].id;
-	            			iresults += "<div class='onimage'><img class='image' src='"+imatched[j].imageUrlsBySize['90']+"'><div class='overlay'><a class='text' href='http://www.yummly.com/recipe/"+irecipeLink+"' target='_blank'>"+imatched[j].recipeName + "</a></div></div>";
+	            			iresults += "<div style='margin:5px' class='onimage'><img class='image' src='"+imatched[j].imageUrlsBySize['90']+"'><div class='overlay'><a class='text' href='http://www.yummly.com/recipe/"+irecipeLink+"' target='_blank'>"+imatched[j].recipeName + "</a></div></div>";
 	            		}
 	             	$("#results").html(iresults); 
 	             	
