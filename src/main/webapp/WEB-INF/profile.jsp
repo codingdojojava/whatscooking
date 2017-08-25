@@ -14,6 +14,9 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style>
+	.daycircle{
+		border-radius: 50%;
+	}
 	.day{
 		display:inline-block;
 		height: 150px;
@@ -155,80 +158,27 @@
 		          	 <div class="row tabcontent" id="groctab">
 
 		        		</div>
-		        </div>
-		        <div class="tab-pane fade in bgtab" id="tab4">
-		          <div class="row tabcontent" id="plantab">
-		          	<h2>${currentUser.firstname}'s plan</h2>
-					<div id="week">
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Monday">Monday</a></p>
-							</div>
-							 <div id="monimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Tuesday">Tuesday</a></p>
-							</div>
-							 <div id="tueimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Wednesday">Wednesday</a></p>
-							</div>
-							 <div id="wedimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Thursday">Thursday</a></p>
-							</div>
-							 <div id="thurimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Friday">Friday</a></p>
-							</div>
-							 <div id="friimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Saturday">Saturday</a></p>
-							</div>
-							 <div id="satimgs">
-							 	
-							 </div>
-						</div>
-						<div class="day onimage" style='width:150px; height: 150px;'>
-							<div class='overlay'>
-								<p class='text'><a href="/week/Sunday">Sunday</a></p>
-							</div>
-							 <div id="sunimgs">
-							 	
-							 </div>
-						</div>
 					</div>
-		          
-		          <button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal">Create New Plan</button>
+					<div class="tab-pane fade in bgtab" id="tab4">
+						<div class="row tabcontent" id="plantab" style="width: 80%; margin-left: 0;">
+						<h2>${currentUser.selected.name}</h2>
+						<div id="week">
+							
+						</div>
+						
+						<h3 style="text-align:right"><button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal">Create New Plan</button></h3>
 		          <c:forEach items="${plans}" var="plan" >
-		          
-		          <form method="POST" action="/home/profile/${plan.id}/change-selected">
-			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			        <input class="links" type="submit" value="${plan.name}" />
-			    		</form>
+				  
+					  
+					  <form class='selectWeek' method="POST" action="/home/profile/${plan.id}/change-selected">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input class="links" style="text-decoration: none; background:none; border: none;" type="submit" value="${plan.name}" />
+							</form>
 			    		
 		          <form method="POST" action="/home/plans/${plan.id}/delete">
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			        <input class="links" type="submit" value="Remove Plan" />
+					<!-- <input class="links" type="submit" value="Remove Plan" /> -->
+					<button class='btn btn-secondary' type='submit'><span class="glyphicon glyphicon-trash"></span></button>
 			    		</form>
 			    		
 		          </c:forEach>
@@ -477,6 +427,26 @@
 	
 	
    <script type="text/javascript">
+   $(".selectWeek").submit(function(e){
+	   e.preventDefault();
+	   $.ajax({
+	       url:$(this).attr("action"),
+	       method:'get',
+	       success: function(res){
+			   console.log("WE DONE ITTTTT");
+			   $("#week").html(res);
+	       }
+		})
+   })
+	$.ajax({
+	        url:"/selectedWeek",
+	        method:'get',
+	        success: function(res){
+	            // console.log(res.images[0].hostedLargeUrl);
+				console.log(res);
+	            $("#week").html(res);
+	        }
+   		})
    $(document).ready(function() {
 	   $(".btn-pref .btn").click(function () {
 	       $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
@@ -538,7 +508,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#monimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#monimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -546,7 +516,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#tueimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#tueimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -554,7 +524,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#wedimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#wedimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -562,7 +532,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#thurimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#thurimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -570,7 +540,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#friimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#friimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -578,7 +548,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#satimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#satimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -586,7 +556,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#sunimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#sunimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
 

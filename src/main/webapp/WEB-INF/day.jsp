@@ -71,7 +71,7 @@ body:before {
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input class="links" id="logout" type="submit" value="Logout" />
             </form></li>
-                              <li class="upper-links"><a href="/profile" class="links">My Profile</a></li>
+                              <li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
                             <li class="upper-links">
                                 <a class="links" href="#">
                                     <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-heart"></span>

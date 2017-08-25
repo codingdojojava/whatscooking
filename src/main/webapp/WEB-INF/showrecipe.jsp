@@ -12,6 +12,263 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<style>
+        .square, .btn {
+            border-radius: 0px!important;
+        }
+        
+        /* -- color classes -- */
+        .coralbg {
+            background-color: #ffe11b;
+        } 
+        
+        .coral {
+            color: #ffe11b;
+        }
+        
+        .turqbg {
+            background-color: #46D8D2;
+        }
+        
+        .turq {
+            color: #46D8D2;
+        }
+        
+        .white {
+            color: black!important;
+        }
+        
+        /* -- The "User's Menu Container" specific elements. Custom container for the snippet -- */
+        div.user-menu-container {
+          z-index: 10;
+          background-color: #fff;
+          margin-top: 20px;
+          background-clip: padding-box;
+          opacity: 0.97;
+          filter: alpha(opacity=97);
+          -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+          box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+        }
+        
+        div.user-menu-container .btn-lg {
+            padding: 0px 12px;
+        }
+        
+        div.user-menu-container h4 {
+            font-weight: 300;
+            color: black;
+        }
+        
+        div.user-menu-container a, div.user-menu-container .btn  {
+            transition: 1s ease;
+        }
+        
+        div.user-menu-container .thumbnail {
+           width:100%;
+           min-height:200px;
+           border: 0px!important;
+           padding: 0px;
+           border-radius: 0;
+           border: 0px!important;
+        }
+        
+        /* -- Vertical Button Group -- */
+        div.user-menu-container .btn-group-vertical {
+            display: block;
+        }
+        
+        div.user-menu-container .btn-group-vertical>a {
+            padding: 20px 25px;
+            background-color: #46D8D2;
+            color: black;
+            border-color: #fff;
+        }
+        
+        /* div.btn-group-vertical>a:hover {
+            color: white;
+            border-color: white;
+        } */
+        
+        div.btn-group-vertical>a.active {
+            background: #ffe11b;
+            box-shadow: none;
+            color: black;
+        }
+        /* -- Individual button styles of vertical btn group -- */
+        div.user-menu-btns {
+            padding-right: 0;
+            padding-left: 0;
+            padding-bottom: 0;
+        }
+        
+        div.user-menu-btns div.btn-group-vertical>a.active:after{
+          content: '';
+          position: absolute;
+          left: 100%;
+          top: 50%;
+          margin-top: -13px;
+          border-left: 0;
+          border-bottom: 13px solid transparent;
+          border-top: 13px solid transparent;
+          border-left: 10px solid #46D8D2;
+        }
+        /* -- The main tab & content styling of the vertical buttons info-- */
+        div.user-menu-content {
+            color: #323232;
+        }
+        
+        ul.user-menu-list {
+            list-style: none;
+            margin-top: 20px;
+            margin-bottom: 0;
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+        ul.user-menu-list>li {
+            padding-bottom: 8px;
+            text-align: center;
+        }
+        
+        div.user-menu div.user-menu-content:not(.active){
+          display: none;
+        }
+        
+        /* -- The btn stylings for the btn icons -- */
+        .btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+        .btn-labeled {padding-top: 0;padding-bottom: 0;}
+        
+        /* -- Custom classes for the snippet, won't effect any existing bootstrap classes of your site, but can be reused. -- */
+        
+        .user-pad {
+            padding: 20px 25px;
+        }
+        
+        .no-pad {
+            padding-right: 0;
+            padding-left: 0;
+            padding-bottom: 0;
+        }
+        
+        .user-details {
+            background: #eee;
+            min-height: 333px;
+        }
+        
+        .user-image {
+          max-height:200px;
+          overflow:hidden;
+        }
+        
+        .overview h3 {
+            font-weight: 300;
+            margin-top: 15px;
+            margin: 10px 0 0 0;
+        }
+        
+        .overview h4 {
+            font-weight: bold!important;
+            font-size: 40px;
+            margin-top: 0;
+        }
+        
+        .view {
+            position:relative;
+            overflow:hidden;
+            margin-top: 10px;
+        }
+        
+        .view p {
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+         
+        .caption {
+            position:absolute;
+            top:0;
+            right:0;
+            background: rgba(70, 216, 210, 0.44);
+            width:100%;
+            height:100%;
+            padding:2%;
+            display: none;
+            text-align:center;
+            color:#fff !important;
+            z-index:2;
+        }
+        
+        .caption a {
+            padding-right: 10px;
+            color: #fff;
+        }
+        
+        .info {
+            display: block;
+            padding: 10px;
+            background: #eee;
+            text-transform: uppercase;
+            font-weight: 300;
+            text-align: right;
+        }
+        
+        .info p, .stats p {
+            margin-bottom: 0;
+        }
+        
+        .stats {
+            display: block;
+            padding: 10px;
+            color: white;
+        }
+        
+        .share-links {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .square, .btn {
+            border-radius: 0px!important;
+        }
+        
+        /* -- media query for user profile image -- */
+        @media (max-width: 767px) {
+            .user-image {
+                max-height: 400px;
+            }
+		}
+		.changeBoxSize{
+
+			min-height: 100%;
+		}
+    </style>
+    <script>
+        $(document).ready(function() {
+            var $btnSets = $('#responsive'),
+            $btnLinks = $btnSets.find('a');
+        
+            $btnLinks.click(function(e) {
+                e.preventDefault();
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active");
+                var index = $(this).index();
+                $("div.user-menu>div.user-menu-content").removeClass("active");
+                $("div.user-menu>div.user-menu-content").eq(index).addClass("active");
+            });
+        });
+
+        $( document ).ready(function() {
+            $("[rel='tooltip']").tooltip();    
+        
+            $('.view').hover(
+                function(){
+                    $(this).find('.caption').slideDown(250); //.fadeIn(250)
+                },
+                function(){
+                    $(this).find('.caption').slideUp(250); //.fadeOut(205)
+                }
+            ); 
+        });
+    </script>
 </head>
 <body>
 	<div id="flipkart-navbar" style="margin-top: 20px;">
@@ -72,18 +329,68 @@
 	    <a href="http://clashhacks.in/">Link</a>
 	    <a href="http://clashhacks.in/">Link</a>
 	</div>
-	<h1 id='name'></h1>
-	<div id="image"></div>
-	<div id='instructions'></div>
-	<div id='links'><a href="/favorite/${recipeId}">Favorite</a></div>
-	<div><a href="/addtoplan/${recipeId}">Add to plan</a></div>
-	<h3>Cooking time: <span id="cookTime"></span></h3>
-	<h3>Ingredients (serves <span id="numServe"></span>):</h3>
-		<ul id="ingredients">
-		</ul>
-	
-	<h3>Nutrition:</h3>
-	<ul id="nutrition"></ul>
+	<div class="container">
+			<div class="row user-menu-container square">
+				<div class="col-md-7 user-details">
+					<div class="row coralbg white">
+						<div style="margin-top: -25px" class="col-md-6 no-pad">
+							<div class="user-pad">
+								<h3 id="name"></h3>
+								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a href="/favorite/${recipeId}">Favorite</a></h4>
+								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a href="/addtoplan/${recipeId}">Add to plan</a></h4>
+								<h4 style="font-size: 16px; font-weight:bold;" class="white"><a href="/groceries/add/${recipeId}">Add to groceries</a></h4>
+								<div id="instructions"></div>
+							</div>
+						</div>
+						<div class="col-md-6 no-pad">
+							<div class="user-image">
+								<div id='image'></div>
+							</div>
+						</div>
+					</div>
+					<div class="row overview">
+						<div class="col-md-4 user-pad text-center">
+							<h3>RATING</h3>
+							<h4 id='rating'></h4>
+						</div>
+						<div class="col-md-4 user-pad text-center">
+							<h3>FAVORITES</h3>
+							<h4 id='numFavorite'></h4>
+						</div>
+						<div class="col-md-4 user-pad text-center">
+							<h3>COOK TIME</h3>
+							<h4 id='cookTime'></h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5 user-menu-btns">
+					<div class="btn-group-vertical square" id="responsive">
+						<a href="#" class="btn btn-block btn-default active changeBoxSize">
+							<i class="fa fa-bell-o fa-3x">Nutrition</i>
+						</a>
+						<a href="#" class="btn btn-default changeBoxSize">
+							<i class="fa fa-envelope-o fa-3x">Ingredients</i>
+						</a>
+					</div>
+				</div>
+				<div class="col-md-5 user-menu user-pad">
+					<div class="user-menu-content active">
+						<h3>
+							Nutrition Facts
+						</h3>
+						<ul class="user-menu-list" id="nutrition">
+						</ul>
+					</div>
+					<div class="user-menu-content">
+						<h3>
+							Ingredients
+						</h3>
+						<ul class="user-menu-list" id='ingredients'>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	<script>
 	$.ajax({
         url:"http://api.yummly.com/v1/api/recipe/${recipeId}?_app_id=05610fe6&_app_key=bbb5f5f86b3b34fc33b68a21e83c13ee",
@@ -102,8 +409,10 @@
 			$("#nutrition").html(nutrStr);
 			$("#cookTime").html(res.totalTime);
 			$("#numServe").html(res.numberOfServings);
-			$("#image").html("<img src='" + res.images[0].hostedLargeUrl +"' alt='faaa'>");
-			$("#instructions").html("<a href='" + res.attribution.url + "'>Instructions</a>")
+			$("#image").html("<img src='" + res.images[0].hostedLargeUrl +"' class='img-responsive thumbnail'>");
+			$("#instructions").html("<button style='font-weight:bold;' type='button' class='btn btn-labeled btn-info' href='" + res.attribution.url + "'>See more</button>")
+			$("#rating").html(res.rating);
+			$("#numFavorite").html("${numFavs}");
         }
 		})
 	</script>
