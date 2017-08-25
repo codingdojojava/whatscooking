@@ -12,10 +12,11 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style>
 	#list-meal-plans {
-    /* background: rgba(51, 122, 183 ,0.7); */
+    background: rgba(51, 122, 183 ,0.0);
     width: 19%;
     margin-top: -42%;
     margin-left: 1%;
@@ -69,6 +70,7 @@
 	    background-size: cover;
 	    -webkit-font-smoothing: antialiased;
 	    text-rendering: optimizelegibility;
+	    
 	}
 	
 	.change_size {
@@ -106,8 +108,26 @@
 		    margin-left: 980px;
 		    min-height: 480px;
     			padding: 50px;
-    			background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+    			background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
+    			border-radius: 1%;
+    			box-shadow:0 0 25px #fff;
 	}
+	
+	
+	.hide-bullets {
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.carousel-inner>.item>img, .carousel-inner>.item>a>img {
+    width: 100%;
+}
+	
 </style>
 </head>
 <body>
@@ -176,7 +196,62 @@
 		        		</div>
 		        </div>
 		        <div class="tab-pane fade in bgtab" id="tab2">
-		          <div class="row tabcontent" id="favtab">
+		          <div class="row tabcontent" id="favtab" style="margin-left: 0;">
+		          
+		          
+		          
+		          
+		          
+		          
+		          
+<div class="container">
+    <div id="main_area">
+        <!-- Slider -->
+        <div class="row">
+            <div class="col-sm-6" id="slider-thumbs">
+                <!-- Bottom switcher of slider -->
+                <ul class="hide-bullets" id="favthumblist">
+                
+  
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <div class="col-xs-12" id="slider">
+                    <!-- Top part of the slider -->
+                    <div class="row">
+                        <div class="col-sm-12" id="carousel-bounding-box">
+                            <div class="carousel slide" id="myCarousel">
+                                <!-- Carousel items -->
+                                <div class="carousel-inner" id="favlargelist">
+
+                                    
+                                </div>
+                                <!-- Carousel nav -->
+                                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a>
+                                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--/Slider-->
+        </div>
+
+    </div>
+</div>
+		          
+		          
+		          
+		          
+		          
+		          
+		          
 		          
 		          
 		        	  </div>
@@ -257,6 +332,9 @@
                 <form:label path="username">Email: </form:label>
                 <form:input cssClass="form-control" path="username"/>
               </div>
+              
+                <form:hidden cssClass="form-control" path="password"/>
+       
 				<div class="form-group">
 		                                		<div class="row">
 			                                    <label class="col-sm-2 control-label">Diets:</label>
@@ -474,10 +552,17 @@
 </div>
 	
 	
-	
+
 	
 	
    <script type="text/javascript">
+   
+   var randomnumber = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
+   var bgpics = ["http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_1525/v1503650953/brooke-lark-93583_ipbwsq.jpg","http://res.cloudinary.com/rockafella20/image/upload/v1503650949/monstruo-estudio-574_tmoiyo.jpg","http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_1585/v1503650951/brenda-godinez-229718_w9tcm1.jpg","http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_1323/v1503650719/brooke-lark-212309_zcgwy9.jpg","http://res.cloudinary.com/rockafella20/image/upload/c_scale,w_3246/v1503556990/aurelien-sinte-328790_qdbrgp.jpg"]
+   var rbgimage = "linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("+bgpics[randomnumber]+") center center no-repeat fixed"
+   $('body').css("background",rbgimage)
+   $('body').css("background-size","cover")
+   
    $(".selectWeek").submit(function(e){
 	   e.preventDefault();
 	   $.ajax({
@@ -543,11 +628,24 @@
 	       success: function(res){
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
+				var bigimgUrl = res.images[0]["hostedLargeUrl"];
 	
-				$("#favtab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form class='rmFav' method='POST' action='/home/favorites/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Favorite' /></form><p>"+res.cookTime+"</p>");
+				
+				<c:choose>
+				<c:when test="${loop.index eq 0 }" >
+				$("#favthumblist").append("<li class='col-sm-3'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+imgUrl+"'></a><p><a href='/recipe/"+res.id+"'>"+res.name+"</a></p></li>");
+				$("#favlargelist").append("<div class='active item' data-slide-number='${loop.index}'><img src='"+bigimgUrl+"'></div>");
+	 			$("#slide-content").append("<div id='slide-content-${loop.index}'><a href='/recipe/"+res.id+"'>"+res.name+"</a></div>");
+				</c:when>
+				<c:otherwise>
+				$("#favthumblist").append("<li class='col-sm-3'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+imgUrl+"'></a><p><a href='/recipe/"+res.id+"'>"+res.name+"</a></p></li>");
+				$("#favlargelist").append("<div class='item' data-slide-number='${loop.index}'><img src='"+bigimgUrl+"'></div>");
+	 			$("#slide-content").append("<div id='slide-content-${loop.index}'><a href='#'>"+res.name+"</a></div>");
+				</c:otherwise>
+			</c:choose>
 				
 				
-// 			$("#slide-content").append("<div id='slide-content-${loop.index}'><h2>"+ res.name +"</h2><p>Source: <a href='#'>"+res.source.sourceDisplayName+"</a></p><p>Rating: "+res.rating+"</p><p>Prep Time: "+res.prepTime+"</p><p>Cook Time: "+res.cookTime+"</p><p>Total Time: "+res.totalTime+"</p></div>");
+				
 //				$(".hide-bullets").append("<li class='col-sm-2'><a class='thumbnail' id='carousel-selector-${loop.index}'><img src='"+res.images[0]["hostedLargeUrl"]+"'></a></li>"); 
 				
 	       }
@@ -641,6 +739,43 @@
    		})
 
 	});
+   
+ $('#myCarousel').carousel({
+       interval: 10000
+});
+
+//Handles the carousel thumbnails
+/* $('[id^=carousel-selector-]').click(function () {
+var id_selector = $(this).attr("id");
+try {
+   var id = /-(\d+)$/.exec(id_selector)[1];
+   console.log(id_selector, id);
+   jQuery('#myCarousel').carousel(parseInt(id));
+} catch (e) {
+   console.log('Regex failed!', e);
+}
+});
+
+ */
+
+$(document).on("click", '[id^=carousel-selector-]', function(){
+    // do stuff
+var id_selector = $(this).attr("id");
+try {
+   var id = /-(\d+)$/.exec(id_selector)[1];
+   console.log(id_selector, id);
+   jQuery('#myCarousel').carousel(parseInt(id));
+} catch (e) {
+   console.log('Regex failed!', e);
+}
+});
+
+// When the carousel slides, auto update the text
+$('#myCarousel').on('slid.bs.carousel', function (e) {
+        var id = $('.item.active').data('slide-number');
+       $('#carousel-text').html($('#slide-content-'+id).html());
+});
+   
    </script>
 </body>
 </html>
