@@ -105,7 +105,7 @@
 	}
 	
 	.tabcontent {
-		    margin-left: 980px;
+		    margin-left: 0px;
 		    min-height: 480px;
     			padding: 50px;
     			background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
@@ -661,7 +661,7 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#groctab").append("<img style='margin-top: 20px;' class='col-md-5' src='"+imgUrl+"'><h3 class='col-md-7'>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/></form><p>Ingredients: </p><div class='col-md-12'><ul id='ingredientList-${loop.index}'></ul></div><div style='margin-bottom: 10px;'><input class='links btn btn-danger' style='margin-left: 50%' type='submit' value='Remove Recipe' /></div>");
+				$("#groctab").append("<img style='margin-top: 20px;' class='col-md-2' src='"+imgUrl+"'><h3 class='col-md-7'>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/></form><p style='margin-top: 170px; margin-left: 20px;'>Ingredients: </p><div class='col-md-12'><ul id='ingredientList-${loop.index}'></ul></div><div style='margin-bottom: 10px;'><input class='links btn btn-danger' style='margin-left: 50%' type='submit' value='Remove Recipe' /></div>");
 	       	
 				var ingred = res.ingredientLines;
 				console.log(ingred.length);
