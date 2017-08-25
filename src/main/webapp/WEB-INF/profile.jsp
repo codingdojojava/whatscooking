@@ -14,6 +14,9 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style>
+	.daycircle{
+		border-radius: 50%;
+	}
 	.day{
 		display:inline-block;
 		height: 150px;
@@ -155,26 +158,27 @@
 		          	 <div class="row tabcontent" id="groctab">
 
 		        		</div>
-		        </div>
-		        <div class="tab-pane fade in bgtab" id="tab4">
-		          <div class="row tabcontent" id="plantab">
-		          	<h2>${currentUser.firstname}'s plan</h2>
-					<div id="week">
-						
 					</div>
-		          
-		          <button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal">Create New Plan</button>
+					<div class="tab-pane fade in bgtab" id="tab4">
+						<div class="row tabcontent" id="plantab" style="width: 80%; margin-left: 0;">
+						<h2>${currentUser.selected.name}</h2>
+						<div id="week">
+							
+						</div>
+						
+						<h3 style="text-align:right"><button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal">Create New Plan</button></h3>
 		          <c:forEach items="${plans}" var="plan" >
 				  
-				  
-		          <form class='selectWeek' method="POST" action="/home/profile/${plan.id}/change-selected">
-			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			        <input class="links" type="submit" value="${plan.name}" />
-			    		</form>
+					  
+					  <form class='selectWeek' method="POST" action="/home/profile/${plan.id}/change-selected">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input class="links" style="text-decoration: none; background:none; border: none;" type="submit" value="${plan.name}" />
+							</form>
 			    		
 		          <form method="POST" action="/home/plans/${plan.id}/delete">
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			        <input class="links" type="submit" value="Remove Plan" />
+					<!-- <input class="links" type="submit" value="Remove Plan" /> -->
+					<button class='btn btn-secondary' type='submit'><span class="glyphicon glyphicon-trash"></span></button>
 			    		</form>
 			    		
 		          </c:forEach>
@@ -504,7 +508,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#monimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#monimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -512,7 +516,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#tueimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#tueimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -520,7 +524,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#wedimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#wedimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -528,7 +532,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#thurimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#thurimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -536,7 +540,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#friimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#friimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -544,7 +548,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#satimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#satimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
    		$.ajax({
@@ -552,7 +556,7 @@
 	        method:'get',
 	        success: function(res){
 	            console.log(res.images[0].hostedLargeUrl);
-	            $("#sunimgs").html("<img style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
+	            $("#sunimgs").html("<img class='daycircle' style='width: 150px; height: 150px;' src='"+res.images[0].hostedLargeUrl+"' alt='0'>")
 	        }
    		})
 

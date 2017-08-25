@@ -292,7 +292,6 @@ public class WhatsCookingCtrl {
 		user.setSelected(temp);
 		temp.setUserSelected(user);
 		whatsCookingServices.updateProfile(user);
-<<<<<<< HEAD
 		model.addAttribute("current", user);
 		return "currweek";
 	}
@@ -302,9 +301,6 @@ public class WhatsCookingCtrl {
 		User user = whatsCookingServices.findByUsername(principal.getName());
 		model.addAttribute("current", user);
 		return "currweek";
-=======
-		weekServ.updateWeek(temp);
-		return "redirect:/home/profile";
 	}
 	
 	
@@ -347,7 +343,6 @@ public class WhatsCookingCtrl {
 		
 		whatsCookingServices.removeRecipeFromFavorites(user, recipe);
 		return "redirect:/home/profile";
->>>>>>> master
 	}
 	
 	
