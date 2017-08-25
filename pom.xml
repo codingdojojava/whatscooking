@@ -6,7 +6,7 @@
 	<groupId>com.codingdojo.whatscooking</groupId>
 	<artifactId>whatscooking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>whatscooking</name>
 	<description>spring boot</description>
