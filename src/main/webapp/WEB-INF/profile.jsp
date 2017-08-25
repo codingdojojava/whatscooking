@@ -146,7 +146,7 @@
 	<div class="row">
 	    <div style="z-index: 1;" class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
 	        <div class="btn-group" role="group">
-	            <button type="button" id="stars" class="btn btn-primary change_size barbutton" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+	            <button type="button" id="stars" class="btn btn-primary change_size barbutton active" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 	                <div class="hidden-xs">Profile</div>
 	            </button>
 	        </div>
@@ -264,7 +264,7 @@
 					</div>
 					<div class="tab-pane fade in bgtab" id="tab4">
 						<div class="row tabcontent" id="plantab" style="width: 100%; margin-left: 0;min-height: 30px;height: 328px; margin-top: 4%;">
-						<h2 style="margin-left: 30px; font-size: 21px;">You are viewing: <span id="weekName">${currentUser.selected.name}</span></h2>
+						<h2 style="display: none; margin-left: 30px; font-size: 21px;">You are viewing: <span id="weekName">${currentUser.selected.name}</span></h2>
 						<div id="week" style="margin-left: 30%; margin-top: 3%;">
 							
 						</div>

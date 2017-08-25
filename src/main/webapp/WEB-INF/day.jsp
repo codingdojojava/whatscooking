@@ -70,7 +70,7 @@ article{
 }
 </style>
 </head>
-<body style="background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(http://res.cloudinary.com/rockafella20/image/upload/c_scale,e_blur:352,w_1860/v1503681852/grovemade-239354_o8grht.jpg) center center no-repeat fixed;">
+<body style="background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(http://res.cloudinary.com/rockafella20/image/upload/c_scale,e_blur:352,w_1860/v1503681852/grovemade-239354_o8grht.jpg) center center no-repeat fixed; background-size: cover;">
         <div id="flipkart-navbar" style="margin-top: 20px;">
                 <div class="container">
                     <div class="row row1">
@@ -126,7 +126,7 @@ article{
                 <a href="http://clashhacks.in/">Link</a>
                 <a href="http://clashhacks.in/">Link</a>
             </div>
-    <h1>${day} Recipes</h1>
+    <h1 style="background: rgba(255,255,255,0.5);">${day} Recipes</h1>
     <div id="allRecipes">
 
     </div>
