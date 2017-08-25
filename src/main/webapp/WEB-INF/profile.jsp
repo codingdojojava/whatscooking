@@ -523,7 +523,7 @@
 		<div class="modal-body">
 			
             <!-- content goes here -->
-            <form:form method="POST" action="/home/addPlan" modelAttribute="plan">
+            <form:form method="POST" id='addnewplan' action="/home/addPlan" modelAttribute="plan">
 			  <div class="form-group">
                 <form:label path="name">Plan Name: </form:label>
                 <form:input cssClass="form-control" path="name"/>
@@ -568,6 +568,7 @@
    $('body').css("background",rbgimage)
    $('body').css("background-size","cover")
    
+
    $(".selectWeek").submit(function(e){
 	   e.preventDefault();
 	   $.ajax({
