@@ -19,4 +19,5 @@ public class RecipeService {
 	public void addRecipe(Recipe recipe) {
 		recipeRepo.save(recipe);
 	}
+
 }
