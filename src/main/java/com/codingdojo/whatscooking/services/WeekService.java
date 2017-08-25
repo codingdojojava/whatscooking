@@ -23,4 +23,9 @@ public class WeekService {
 	public Week findWeek(Long id) {
 		return weekRepo.findOne(id);
 	}
+	
+	public void deleteWeek(Long id) {
+		weekRepo.delete(id);
+	}
+	
 }
