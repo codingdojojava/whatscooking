@@ -202,6 +202,17 @@
 											        				<label>${diet.name}</label>
 											        			</div>
 														</c:when> 
+ 														<c:when test="${loop.index eq 6 }">
+									        					<div class="row">
+									        					<div class="col-sm-2"></div>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${diet.name}</label>
+											        			</div>
+											        			</div>
+														</c:when> 
 														
 														<c:otherwise>
 											        			<div class="col-sm-1 checkbox_container">
@@ -346,6 +357,8 @@
 	
 	
 	</div>
+	
+	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 	<script type="text/javascript">/*
 

@@ -15,6 +15,8 @@
 		width: 150px;
 		vertical-align:top;
 		margin: 10px;
+		box-shadow:0 0 5px #fff;
+		border-radius:50%;
 	}
 	#logout{
 		border: none;

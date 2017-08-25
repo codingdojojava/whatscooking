@@ -14,6 +14,20 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style>
+	#list-meal-plans {
+    background: rgba(51, 122, 183 ,0.7);
+    width: 19%;
+    margin-top: -42%;
+    margin-left: 1%;
+    min-height: 520px;
+    font-size: 28px;
+    box-sizing: border-box;
+    padding: 21px;
+    padding-top: 26%;
+    height: 1000px;
+    z-index: 7;
+	}
+
 	.daycircle{
 		border-radius: 50%;
 	}
@@ -23,6 +37,9 @@
 		width: 150px;
 		border: 1px solid black;
 		vertical-align:top;
+		box-shadow:0 0 5px #000;
+		border-radius: 50%;
+		 margin-right: 14px;
 	}
 .center {
     margin-top:50px;   
@@ -94,8 +111,19 @@
 </style>
 </head>
 <body>
+      <div class="row" style="margin-top: 10px;">
+            <ul class="largenav pull-right">
+                
+              	<li style="margin-top:1px;" class="upper-links"><a href="/home" class="links"> <span style="font-size: 16px; top: 3px;" class="glyphicon glyphicon-home"></span>  Home</a></li>
+				 <li class="upper-links"><form id="logoutForm" method="POST" action="/logout">
+				        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				        <input style="background: none;, border: none; text-decoration: none; box-shadow: none; border: none; margin-right: 26px;" class="links" id="logout" type="submit" value="Logout" />
+				    </form></li>
+            </ul>
+        </div>
+
 	<div class="row">
-	    <div style="margin-top: 20px;" class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+	    <div style="z-index: 1;" class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
 	        <div class="btn-group" role="group">
 	            <button type="button" id="stars" class="btn btn-primary change_size" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 	                <div class="hidden-xs">Profile</div>
@@ -128,7 +156,7 @@
 		            <img alt="" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg">
 		        </div>
 		    </div>
-		        <div class="well wellcontent">
+		        <div class="well wellcontent" style="padding: 0;">
 		      <div class="tab-content">
 		        <div class="tab-pane fade in active bgtab" id="tab1">
 		        		<div class="row tabcontent">
@@ -160,29 +188,36 @@
 		        		</div>
 					</div>
 					<div class="tab-pane fade in bgtab" id="tab4">
-						<div class="row tabcontent" id="plantab" style="width: 80%; margin-left: 0;">
-						<h2>${currentUser.selected.name}</h2>
-						<div id="week">
+						<div class="row tabcontent" id="plantab" style="width: 100%; margin-left: 0;min-height: 30px;height: 328px; margin-top: 4%;">
+						<h2 style="margin-left: 30px; font-size: 21px;">You are viewing: ${currentUser.selected.name}</h2>
+						<div id="week" style="margin-left: 30%; margin-top: 3%;">
 							
 						</div>
 						
-						<h3 style="text-align:right"><button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal">Create New Plan</button></h3>
+						<h3 style="text-align:right"><button class="behindz" data-toggle="modal" data-target="#plansquarespaceModal" style="margin-top: 2%;margin-right: 3%;font-size: 18px;"><span class="glyphicon glyphicon-plus"> </span> Create New Plan</button></h3>
+		          <div id="list-meal-plans">
 		          <c:forEach items="${plans}" var="plan" >
-				  
-					  
-					  <form class='selectWeek' method="POST" action="/home/profile/${plan.id}/change-selected">
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						<input class="links" style="text-decoration: none; background:none; border: none;" type="submit" value="${plan.name}" />
-							</form>
-			    		
+		          <div>
+		          			    		<div style="display: inline-block;" >
 		          <form method="POST" action="/home/plans/${plan.id}/delete">
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<!-- <input class="links" type="submit" value="Remove Plan" /> -->
-					<button class='btn btn-secondary' type='submit'><span class="glyphicon glyphicon-trash"></span></button>
+					<button style="display:inline; background:none;" class='btn btn-secondary' type='submit'><span class="glyphicon glyphicon-trash"></span></button>
 			    		</form>
 			    		
+			    		</div>
+		          <div style="display: inline-block;" >
+					  <form class='selectWeek' method="POST" action="/home/profile/${plan.id}/change-selected">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input class="links" style="text-decoration: none; background:none; border: none; display:inline; " type="submit" value="${plan.name}" />
+							</form>
+			    		
+			    		</div>
+
+		          </div>
 		          </c:forEach>
 		          
+		          </div>
 		        		</div>
 		        </div>
 		      </div>
@@ -264,6 +299,17 @@
 											        			</div>
 											        			<div class="col-sm-2 label_checkbox">
 											        				<label>${diet.name}</label>
+											        			</div>
+														</c:when> 
+ 														<c:when test="${loop.index eq 6 }">
+									        					<div class="row">
+									        					<div class="col-sm-2"></div>
+									        					<div class="col-sm-1 checkbox_container">
+											        				<form:checkbox class="form-control shrinkify" path="diets" value="${diet}"/>
+											        			</div>
+											        			<div class="col-sm-2 label_checkbox">
+											        				<label>${diet.name}</label>
+											        			</div>
 											        			</div>
 														</c:when> 
 														
@@ -359,11 +405,16 @@
 									        		</c:forEach> 
 									        		</div>	
 			                  				
+<!-- 		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+				<div class="btn-group" role="group">
+					<button type="submit" class="btn btn-default" data-dismiss="modal"  role="button">Update</button>
+				</div>
+			</div>
+		</div>
+              <button type="submit" class="btn btn-default">Update Changes</button> -->
 
-              <button type="submit" class="btn btn-default">Update Changes</button>
 
-
-            </form:form>
 		</div>
 		<div class="modal-footer">
 			<div class="btn-group btn-group-justified" role="group" aria-label="group button">
@@ -373,11 +424,12 @@
 				<div class="btn-group btn-delete hidden" role="group">
 					<button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal"  role="button">Delete</button>
 				</div>
-				<div class="btn-group hidden" role="group">
-					<button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Save</button>
+				<div class="btn-group" role="group">
+					<button type="submit" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Update</button>
 				</div>
 			</div>
 		</div>
+            </form:form>
 	</div>
   </div>
 </div>
@@ -388,7 +440,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-			<h3 class="modal-title" id="lineModalLabel">Edit Profile</h3>
+			<h3 class="modal-title" id="lineModalLabel">Creat a New Plan</h3>
 		</div>
 		<div class="modal-body">
 			
