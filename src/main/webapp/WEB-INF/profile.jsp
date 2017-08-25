@@ -455,6 +455,28 @@
 	   });
 	   
 
+	$(document).on('submit', '.rmFav', function(e){
+		e.preventDefault();
+		$.ajax({
+	       url:$(this).attr('action'),
+	       method:'get',
+	       success: function(res){
+				$("#favtab").html(res);
+	       }
+		})
+	})
+
+	$(document).on('submit', '.rmGroc', function(e){
+		e.preventDefault();
+		$.ajax({
+	       url:$(this).attr('action'),
+	       method:'get',
+	       success: function(res){
+			   console.log("QQQQQ");
+				$("#groctab").html(res);
+	       }
+		})
+	})
    
    <c:forEach items="${favoritess}" var="favorite" varStatus="loop">
 	   $.ajax({
@@ -464,7 +486,7 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#favtab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form method='POST' action='/home/favorites/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Favorite' /></form><p>"+res.cookTime+"</p>");
+				$("#favtab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form class='rmFav' method='POST' action='/home/favorites/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Favorite' /></form><p>"+res.cookTime+"</p>");
 				
 				
 // 			$("#slide-content").append("<div id='slide-content-${loop.index}'><h2>"+ res.name +"</h2><p>Source: <a href='#'>"+res.source.sourceDisplayName+"</a></p><p>Rating: "+res.rating+"</p><p>Prep Time: "+res.prepTime+"</p><p>Cook Time: "+res.cookTime+"</p><p>Total Time: "+res.totalTime+"</p></div>");
@@ -483,7 +505,7 @@
 				console.log(res);
 				var imgUrl = res.images[0]["hostedSmallUrl"];
 	
-				$("#groctab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Recipe' /></form><p>Ingredients: </p><ul id='ingredientList-${loop.index}'></ul>");
+				$("#groctab").append("<img src='"+imgUrl+"'><h3>"+res.name+"</h3><form class='rmGroc' method='POST' action='/home/groceries/${favorite.id}/delete'><input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/><input class='links' type='submit' value='Remove Recipe' /></form><p>Ingredients: </p><ul id='ingredientList-${loop.index}'></ul>");
 	       	
 				var ingred = res.ingredientLines;
 				console.log(ingred.length);
