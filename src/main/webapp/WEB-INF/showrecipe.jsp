@@ -286,12 +286,12 @@
 	    <div class="container">
 	        <div class="row row1">
 	            <ul class="largenav pull-right">
+					<li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
+	              	<li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
 	                <li class="upper-links"><form id="logoutForm" method="POST" action="/logout">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input class="links" id="logout" type="submit" value="Logout" />
     </form></li>
-	              	<li class="upper-links"><a href="/home/profile" class="links">My Profile</a></li>
-					<li class="upper-links"><a href="/home" class="links"><span class='glyphicon glyphicon-home'></span></a></li>
 	            </ul>
 	        </div>
 	        <div class="row row2">
